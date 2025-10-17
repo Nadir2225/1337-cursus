@@ -1,0 +1,85 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nel-ouad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/15 09:12:45 by nel-ouad          #+#    #+#             */
+/*   Updated: 2025/10/15 09:12:46 by nel-ouad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+
+static int	ft_contains(char c, char *set)
+{
+	while (*set)
+	{
+		if (c == *set)
+			return (1);
+		set++;
+	}
+	return (0);
+}
+
+static int	ft_countlen(char *s1, char *set)
+{
+	char	*reached;
+	int		len;
+	int		templen;
+
+	len = 0;
+	while (*s1)
+	{
+		templen = 0;
+		if (!ft_contains(*s1, set))
+			len++;
+		else
+		{
+			reached = s1;
+			while (*reached)
+			{
+				if (ft_contains(*reached, set))
+				{
+					reached++;
+					templen++;
+				}
+				else
+					break ;
+			}
+			if (!*reached)
+			{
+				s1 = reached;
+				len += templen;
+			}
+		}
+	}
+	return (len);
+}
+
+char	*ft_strtrim(char const *s1, char const *set)
+{
+	int		len;
+	char	*str1;
+	char	*trimmed;
+	int		i;
+
+	len = 0;
+	i = 0;
+	str1 = (unsigned char *)s1;
+	while (ft_contains(*str1, set))
+		str1++;
+	len = ft_countlen(str1, set);
+	trimmed = malloc((len + 1) * sizeof(char));
+	if (!trimmed)
+		return (NULL);
+	str1 = (unsigned char *)s1;
+	while (ft_contains(*str1, set))
+		str1++;
+	while (i < len)
+		trimmed[i] = str1[i++];
+	trimmed[i] = 0;
+	return (trimmed);
+}
+
