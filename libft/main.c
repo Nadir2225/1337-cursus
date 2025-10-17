@@ -3,56 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-ouad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:32:24 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/13 20:32:26 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/17 18:12:08 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "libft.h" // Make sure ft_strtrim is declared here
+#include "libft.h" 
+
+static void print_split(char **result)
+{
+    int i = 0;
+    if (!result)
+    {
+        printf("Result is NULL\n");
+        return;
+    }
+    while (result[i])
+    {
+        printf("result[%d] = '%s'\n", i, result[i]);
+        i++;
+    }
+    printf("result[%d] = %s\n", i, result[i]); // should print (null)
+}
 
 int main(void)
 {
-    char *result;
+    char **result;
 
-    // Test 1: Trim spaces
-    result = ft_strtrim("   Hello Worldf    ", " ");
-    printf("Test 1: '%s'\n", result); // Expected: "Hello World"
+    printf("=== Test 1 ===\n");
+    result = ft_split("Hello world this is C", ' ');
+    print_split(result);
     free(result);
 
-    // Test 2: Trim specific chars
-    result = ft_strtrim("xxxHello Worldxxx", "x");
-    printf("Test 2: '%s'\n", result); // Expected: "Hello World"
+    printf("\n=== Test 2 ===\n");
+    result = ft_split("   split   these words  ", ' ');
+    print_split(result);
     free(result);
 
-    // Test 3: Trim multiple chars
-    result = ft_strtrim("!?Hello World?!", "!?");
-    printf("Test 3: '%s'\n", result); // Expected: "Hello World"
+    printf("\n=== Test 3 ===\n");
+    result = ft_split("one,two,,three,", ',');
+    print_split(result);
     free(result);
 
-    // Test 4: Nothing to trim
-    result = ft_strtrim("Hello", "x");
-    printf("Test 4: '%s'\n", result); // Expected: "Hello"
+    printf("\n=== Test 4 ===\n");
+    result = ft_split("", ' ');
+    print_split(result);
     free(result);
 
-    // Test 5: All chars trimmed
-    result = ft_strtrim("xxxx", "x");
-    printf("Test 5: '%s'\n", result); // Expected: "" (empty string)
-    free(result);
-
-    // Test 6: Empty string input
-    result = ft_strtrim("", " ");
-    printf("Test 6: '%s'\n", result); // Expected: "" (empty string)
-    free(result);
-
-    // Test 7: Empty set (nothing trimmed)
-    result = ft_strtrim("  Hello  ", "");
-    printf("Test 7: '%s'\n", result); // Expected: "  Hello  "
+    printf("\n=== Test 5 ===\n");
+    result = ft_split(NULL, ' ');
+    print_split(result);
     free(result);
 
     return 0;
 }
-

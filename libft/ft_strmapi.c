@@ -1,16 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isdigit.c                                       :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 20:25:09 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/17 15:24:29 by nel-ouad         ###   ########.fr       */
+/*   Created: 2025/10/17 16:57:31 by nel-ouad          #+#    #+#             */
+/*   Updated: 2025/10/17 16:57:36 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isdigit(int c)
+#include "libft.h"
+
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	return ((c >= '0' && c <= '9'));
+	unsigned char	*str;
+	char			*mapped_str;
+	size_t			i;
+	size_t			len;
+
+	i = 0;
+	str = (unsigned char *)s;
+	len = ft_strlen(s);
+	mapped_str = malloc(sizeof(char) * (len + 1));
+	while (i < len)
+	{
+		mapped_str[i] = f(i, str[i]);
+		i++;
+	}
+	mapped_str[i] = 0;
+	return (mapped_str);
 }

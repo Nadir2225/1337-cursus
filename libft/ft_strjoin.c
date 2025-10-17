@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nel-ouad <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 19:05:07 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/14 19:05:09 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/17 16:36:52 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*str1;
-	char	*str2;
-	char	*str;
-	int		i;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	char			*str;
+	int				i;
 
 	i = 0;
-	str1 = (char *)s1;
-	str2 = (char *)s2;
-	str = malloc((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	str = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	if (!str)
 		return (NULL);
 	while (*str1)

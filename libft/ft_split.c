@@ -1,0 +1,92 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/17 17:02:45 by nel-ouad          #+#    #+#             */
+/*   Updated: 2025/10/17 18:15:24 by nel-ouad         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+#include <stdio.h>
+
+static int count_words(char const *s, char c)
+{
+	int	count;
+	int i;
+	int in_word;
+
+	count = 0;
+	in_word = 0;
+	i = 0;
+	while (s[i])
+	{
+		if (!in_word && s[i] != c)
+		{
+			count++;
+			in_word = 1;
+		} else if (in_word && s[i] == c)
+		{
+			in_word = 0;
+		}
+		i++;
+	}
+	return (count);
+}
+
+static char	*ft_strldup(const char *s, int i, int len)
+{
+	int		k;
+	char	*dup;
+
+	k = 0;
+	dup = malloc(sizeof(char) * (len + 1));
+	if (!dup)
+		return (NULL);
+	while (s[i] && k < len)
+	{
+		dup[k++] = s[i];
+		i++;
+	}
+	dup[i] = 0;
+	return (dup);
+}
+
+char **ft_split(char const *s, char c)
+{
+	char	**words_array;
+	int 	i;
+	int		in_word;
+	int		start;
+	int		l;
+
+	i = 0;
+	l = 0;
+	in_word = 0;
+	if (!s)
+	{
+		words_array = malloc(sizeof(char *));
+		words_array[0] = NULL;
+		return (words_array);
+	}
+	words_array = malloc(sizeof(char *) * (count_words(s, c) + 1));
+	if (!words_array)
+		return (NULL);
+	while(s[i])
+	{
+		if (s[i] != c)
+		{
+			start = i;
+			while (s[i] && s[i] != c)
+				i++;
+			words_array[l++] = ft_strldup(s, start, i - start);
+		}
+		else
+			i++;
+	}
+	words_array[count_words(s, c)] = NULL;
+	return (words_array);
+}
