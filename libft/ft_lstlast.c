@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 20:32:24 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/18 11:46:28 by nel-ouad         ###   ########.fr       */
+/*   Created: 2025/10/18 11:16:37 by nel-ouad          #+#    #+#             */
+/*   Updated: 2025/10/18 11:38:24 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "libft.h" 
+#include "libft.h"
 
-int	main(void)
+t_list	*ft_lstlast(t_list *lst)
 {
-	return (0);
+	t_list	*current;
+
+	current = lst;
+	if (!lst)
+		return (NULL);
+	while (current)
+	{
+		if (!current->next)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
 }

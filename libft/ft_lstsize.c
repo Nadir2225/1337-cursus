@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 20:32:24 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/18 11:46:28 by nel-ouad         ###   ########.fr       */
+/*   Created: 2025/10/18 11:09:53 by nel-ouad          #+#    #+#             */
+/*   Updated: 2025/10/18 11:15:04 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "libft.h" 
+#include "libft.h"
 
-int	main(void)
+int	ft_lstsize(t_list *lst)
 {
-	return (0);
+	int		len;
+	t_list	*current;
+
+	len = 0;
+	current = lst;
+	while (current)
+	{
+		len++;
+		current = current->next;
+	}
+	return (len);
 }
