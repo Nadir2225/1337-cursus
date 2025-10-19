@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/13 20:28:17 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/19 13:40:46 by nel-ouad         ###   ########.fr       */
+/*   Created: 2025/10/13 20:46:29 by nel-ouad          #+#    #+#             */
+/*   Updated: 2025/10/19 14:22:26 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *s, int c)
+char	*ft_strchr(const char *s, int c)
 {
-	int		i;
-	char	*s2;
+	int	i;
 
 	i = 0;
-	s2 = NULL;
 	while (s[i])
 	{
-		if (s[i] == (char)c)
-			s2 = (char *)&s[i];
+		if (s[i] == c)
+			return ((char *)&s[i]);
 		i++;
 	}
-	
 	if (!(char)c)
-		return (char *)&s[i];
-	return (char *)s2;
+		return ((char *)&s[i]);
+	return (NULL);
 }
