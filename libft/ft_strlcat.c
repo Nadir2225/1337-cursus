@@ -6,13 +6,13 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:42:08 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/17 15:25:51 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/19 10:47:24 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	unsigned int	i;
 	unsigned int	src_len;

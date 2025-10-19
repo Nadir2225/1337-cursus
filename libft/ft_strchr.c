@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:46:29 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/17 16:35:23 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:48:17 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,7 @@ char	*ft_strchr(const char *s, int c)
 			return ((char *)&s[i]);
 		i++;
 	}
+	if (!(char)c)
+		return (char *)&s[i];
 	return (NULL);
 }

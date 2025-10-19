@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:28:17 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/17 16:58:20 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/19 13:40:46 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ char	*ft_strrchr(const char *s, int c)
 	s2 = NULL;
 	while (s[i])
 	{
-		if (s[i] == c)
+		if (s[i] == (char)c)
 			s2 = (char *)&s[i];
 		i++;
 	}
-	return (s2);
+	
+	if (!(char)c)
+		return (char *)&s[i];
+	return (char *)s2;
 }

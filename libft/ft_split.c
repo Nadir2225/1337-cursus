@@ -6,12 +6,11 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 17:02:45 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/18 10:14:20 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/19 10:14:54 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 static int	count_words(char const *s, char c)
 {
