@@ -6,11 +6,17 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:53:48 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/27 16:38:38 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:50:13 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+// little[to_find_i] && big[str_i] == little[to_find_i] && str_i < len
+static int	while_expression(char b, char l, size_t i, size_t len)
+{
+	return (l && b == l && i < len);
+}
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
@@ -27,7 +33,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 		{
 			str_i = i;
 			to_find_i = 0;
-			while (little[to_find_i] && big[str_i] == little[to_find_i] && str_i < len)
+			while (while_expression(big[str_i], little[to_find_i], str_i, len))
 			{
 				str_i++;
 				to_find_i++;

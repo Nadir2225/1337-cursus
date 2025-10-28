@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/23 15:27:30 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/27 17:16:13 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/28 13:58:58 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	void	*ptr;
-	if (nmemb == 0 || size == 0)
-		return (malloc(1));
+
 	ptr = malloc(nmemb * size);
 	if (!ptr)
 		return (NULL);

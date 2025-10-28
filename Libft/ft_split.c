@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 17:02:45 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/27 17:14:10 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:50:29 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,14 @@ static char	*ft_strldup(const char *s, int i, int len)
 	return (dup);
 }
 
-static void my_free(char **arr, int i)
+static void	my_free(char **arr, int i)
 {
 	while (i >= 0)
 		free(arr[i--]);
 	free(arr);
-	// return (0);
 }
 
-static void fill_array(char const *s, char c, char	**words_array)
+static void	fill_array(char const *s, char c, char	**words_array)
 {
 	int	i;
 	int	start;
@@ -80,7 +79,7 @@ static void fill_array(char const *s, char c, char	**words_array)
 				i++;
 			words_array[l] = ft_strldup(s, start, i - start);
 			if (!words_array[l])
-				return my_free(words_array, l);
+				return (my_free(words_array, l));
 			l++;
 		}
 		else
@@ -91,12 +90,7 @@ static void fill_array(char const *s, char c, char	**words_array)
 char	**ft_split(char const *s, char c)
 {
 	char	**words_array;
-	// if (!s)
-	// {
-	// 	words_array = malloc(sizeof(char *));
-	// 	words_array[0] = NULL;
-	// 	return (words_array);
-	// }
+
 	words_array = malloc(sizeof(char *) * (count_words(s, c) + 1));
 	if (!words_array)
 		return (NULL);

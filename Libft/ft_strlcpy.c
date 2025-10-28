@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:46:40 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/27 14:50:34 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:01:27 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dsize)
 	size_t	i;
 
 	i = 0;
-	if (dsize) //is it positive
+	if (dsize)
 	{
 		while (src[i] && i < dsize - 1)
 		{

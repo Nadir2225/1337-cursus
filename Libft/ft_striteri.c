@@ -6,11 +6,9 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 11:13:46 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/17 16:35:37 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:00:58 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "libft.h"
 
 void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
