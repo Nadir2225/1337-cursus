@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:25:30 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/17 15:24:40 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/27 15:11:01 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	s1 = (unsigned char *)s;
 	while (i < n)
 	{
-		if (s1[i] == c)
+		if (s1[i] == (unsigned char)c)
 			return (&s1[i]);
 		i++;
 	}

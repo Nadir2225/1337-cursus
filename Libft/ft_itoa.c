@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 16:57:21 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/17 17:12:27 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/27 17:20:55 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static size_t	ft_ilen(long n)
 
 	nb = n;
 	len = 0;
+	if (n == 0)
+		len = 1;
 	while (nb > 0)
 	{
 		nb /= 10;
@@ -29,6 +31,8 @@ static size_t	ft_ilen(long n)
 
 static void	ft_fillnbr(char *a_number, long nbr, size_t len, int sign)
 {
+	if (nbr == 0)
+		a_number[0] = '0';
 	while (nbr > 0)
 	{
 		a_number[(len - 1) + !sign] = (nbr % 10) + '0';

@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 20:53:48 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/10/17 15:26:09 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/10/27 16:38:38 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,28 @@
 
 char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	const char	*str_copy;
-	const char	*to_find_copy;
-	size_t		i;
+	size_t	str_i;
+	size_t	to_find_i;
+	size_t	i;
 
 	i = 0;
 	if (!*little)
 		return ((char *)big);
-	while (*big && i < len)
+	while (big[i] && i < len)
 	{
-		if (*big == *little)
+		if (big[i] == little[0])
 		{
-			str_copy = big;
-			to_find_copy = little;
-			while (*to_find_copy && *str_copy == *to_find_copy)
+			str_i = i;
+			to_find_i = 0;
+			while (little[to_find_i] && big[str_i] == little[to_find_i] && str_i < len)
 			{
-				str_copy++;
-				to_find_copy++;
+				str_i++;
+				to_find_i++;
 			}
-			if (!*to_find_copy)
-				return ((char *)big);
+			if (!little[to_find_i])
+				return ((char *)&big[i]);
 		}
 		i++;
-		big++;
 	}
-	return (0);
+	return (NULL);
 }
