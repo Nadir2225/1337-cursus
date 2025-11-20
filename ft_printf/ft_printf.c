@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 13:51:49 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/11/08 20:16:21 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/11/20 16:34:44 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ static int	print_format(va_list args, unsigned char f)
 		return (ft_puthex(va_arg(args, unsigned int), 1));
 	else if (f == '%')
 		return (ft_putchar_fd('%', 1));
+	else if (f == '\0')
+		return (-1);
 	return (0);
 }
 
@@ -70,6 +72,8 @@ int	ft_printf(const char *s, ...)
 			count++;
 		}
 	}
+	if (count == 0)
+		return (-1);
 	va_end(args);
 	return (count);
 }
