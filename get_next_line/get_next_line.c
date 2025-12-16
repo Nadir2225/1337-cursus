@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/08 21:06:10 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/11/09 13:41:56 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2025/12/11 14:44:30 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ char	*read_and_join(int fd, char	*stash)
 	char	*buff;
 	ssize_t	bytes_read;
 
-	buff = malloc(BUFFER_SIZE + 1);
+	buff = malloc(BUFFER_SIZE + sizeof(char));
 	bytes_read = 1;
-	while (bytes_read > 0 && (!stash || !ft_strchr(stash, '\n')))
+	while (bytes_read > 0 && !ft_strchr(stash, '\n'))
 	{
 		bytes_read = read(fd, buff, BUFFER_SIZE);
 		if (bytes_read == -1)
