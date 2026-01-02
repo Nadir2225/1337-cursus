@@ -6,14 +6,12 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/24 20:58:47 by nel-ouad          #+#    #+#             */
-/*   Updated: 2025/12/31 17:30:25 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/02 12:38:59 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 // #include "include/push_swap.h"
 #include <stdio.h>
-
-
 
 int main(int argc, char **argv)
 {
