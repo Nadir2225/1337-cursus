@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   s_manip.c                                          :+:      :+:    :+:   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 22:22:02 by nel-ouad          #+#    #+#             */
-/*   Updated: 2026/01/02 12:38:55 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/03 21:44:58 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_number	*new_node(int num)
 		return (NULL);
 	node->num = num;
 	node->order = -1;
-	node->prev = NULL;
 	node->next = NULL;
 	return (node);
 }
@@ -41,7 +40,6 @@ void	add_back(t_number **stack, t_number *new)
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
-	new->prev = tmp;
 }
 
 int	stack_size(t_number *stack)
