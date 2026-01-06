@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 13:48:31 by nel-ouad          #+#    #+#             */
-/*   Updated: 2026/01/04 20:33:17 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/06 13:01:17 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,21 @@ void	free_array(char **array)
 	while (array[i])
 	{
 		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
+void	free_int_array(int *array, int size)
+{
+	int	i;
+
+	if (!array)
+		return ;
+	i = 0;
+	while (i < size)
+	{
+		free(&array[i]);
 		i++;
 	}
 	free(array);

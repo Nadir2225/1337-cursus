@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 16:25:55 by nel-ouad          #+#    #+#             */
-/*   Updated: 2026/01/03 22:02:33 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/06 13:02:25 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int			stack_size(t_number *stack);
 void		ft_error(char **array, t_number *stack);
 void		free_stack(t_number *stack);
 void		free_array(char **array);
+void		free_int_array(int *array, int size);
 
 // indexing
 int			*stack_to_array(t_number *stack, int size);
@@ -71,10 +72,7 @@ void		rrr(t_number **a, t_number **b);
 void		fill_stack_a(t_number **stack_a, t_number **stack_b);
 void		fill_stack_b(t_number **stack_a, t_number **stack_b);
 
-// Utils
-// t_number	*find_node_by_order(t_number *stack, int order);
-// int			is_sorted(t_number *stack);
-// void		free_stack(t_number **stack);
-// void		error_exit(void);
+// test (beta)
+// void		sort_small(t_number **a, t_number **b);
 
 #endif
