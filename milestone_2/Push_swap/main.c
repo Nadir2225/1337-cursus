@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 16:08:50 by nel-ouad          #+#    #+#             */
-/*   Updated: 2026/01/06 13:28:11 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/07 11:45:41 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	sort_3(t_number **a)
 
 void	sort_small(t_number **stack_a, t_number **stack_b, int size)
 {
+	if (size == 2)
+	{
+		if ((*stack_a)->num > (*stack_a)->next->num)
+			ra(stack_a);
+		return ;
+	}
 	while (stack_size(*stack_a) > 3)
 	{
 		if ((*stack_a)->order < size - 3)
