@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 16:25:55 by nel-ouad          #+#    #+#             */
-/*   Updated: 2026/01/06 13:02:25 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/18 11:29:58 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void		rrr(t_number **a, t_number **b);
 void		fill_stack_a(t_number **stack_a, t_number **stack_b);
 void		fill_stack_b(t_number **stack_a, t_number **stack_b);
 
-// test (beta)
-// void		sort_small(t_number **a, t_number **b);
+// sort small
+void		sort_small(t_number **stack_a, t_number **stack_b, int size);
 
 #endif

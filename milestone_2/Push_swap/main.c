@@ -6,68 +6,11 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 16:08:50 by nel-ouad          #+#    #+#             */
-/*   Updated: 2026/01/07 11:45:41 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/18 11:22:31 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "include/push_swap.h"
-
-void	sort_3(t_number **a)
-{
-	int	x;
-	int	y;
-	int	z;
-
-	x = (*a)->order;
-	y = (*a)->next->order;
-	z = (*a)->next->next->order;
-	if (x > y && y < z && x < z)
-		sa(a);
-	else if (x > y && y > z)
-	{
-		sa(a);
-		rra(a);
-	}
-	else if (x > y && y < z && x > z)
-		ra(a);
-	else if (x < y && y > z && x < z)
-	{
-		sa(a);
-		ra(a);
-	}
-	else if (x < y && y > z && x > z)
-		rra(a);
-}
-
-void	sort_small(t_number **stack_a, t_number **stack_b, int size)
-{
-	if (size == 2)
-	{
-		if ((*stack_a)->num > (*stack_a)->next->num)
-			ra(stack_a);
-		return ;
-	}
-	while (stack_size(*stack_a) > 3)
-	{
-		if ((*stack_a)->order < size - 3)
-			pb(stack_a, stack_b);
-		else
-			ra(stack_a);
-	}
-	sort_3(stack_a);
-	while (*stack_b)
-	{
-		if ((*stack_b)->next)
-		{
-			if ((*stack_b)->num < (*stack_b)->next->num)
-				rb(stack_b);
-			else
-				pa(stack_a, stack_b);
-		}
-		else
-			pa(stack_a, stack_b);
-	}
-}
 
 void	sort_stack(t_number **stack_a, t_number **stack_b, int a_size)
 {

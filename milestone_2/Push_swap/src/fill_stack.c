@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 22:00:53 by nel-ouad          #+#    #+#             */
-/*   Updated: 2026/01/18 00:27:41 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/18 11:46:42 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,4 @@ void	fill_stack_a(t_number **stack_a, t_number **stack_b)
 		pa(stack_a, stack_b);
 		current_order--;
 	}
-	(*stack_a);
 }
