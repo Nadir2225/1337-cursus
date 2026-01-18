@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/31 16:25:55 by nel-ouad          #+#    #+#             */
-/*   Updated: 2026/01/18 11:29:58 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/18 12:01:45 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,15 @@ void		assign_order(t_number *stack, int *sorted, int size);
 
 // stack OPPS
 void		sa(t_number **a);
-void		sb(t_number **b);
-void		ss(t_number **a, t_number **b);
 
 void		pa(t_number **a, t_number **b);
 void		pb(t_number **a, t_number **b);
 
 void		ra(t_number **a);
 void		rb(t_number **b);
-void		rr(t_number **a, t_number **b);
 
 void		rra(t_number **a);
 void		rrb(t_number **b);
-void		rrr(t_number **a, t_number **b);
 
 // filling the stacks
 void		fill_stack_a(t_number **stack_a, t_number **stack_b);

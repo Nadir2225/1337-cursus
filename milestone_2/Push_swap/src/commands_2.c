@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/03 20:21:29 by nel-ouad          #+#    #+#             */
-/*   Updated: 2026/01/03 21:38:47 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/01/18 12:00:05 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,6 @@ void	rb(t_number **b)
 		tail = tail->next;
 	tail->next = tmp;
 	write(1, "rb\n", 3);
-}
-
-void	rr(t_number **a, t_number **b)
-{
-	t_number	*tmp;
-	t_number	*tail;
-
-	if (a && *a && (*a)->next)
-	{
-		tmp = *a;
-		*a = (*a)->next;
-		tmp->next = NULL;
-		tail = *a;
-		while (tail->next)
-			tail = tail->next;
-		tail->next = tmp;
-	}
-	if (b && *b && (*b)->next)
-	{
-		tmp = *b;
-		*b = (*b)->next;
-		tmp->next = NULL;
-		tail = *b;
-		while (tail->next)
-			tail = tail->next;
-		tail->next = tmp;
-	}
-	write(1, "rr\n", 3);
 }
 
 void	rra(t_number **a)
