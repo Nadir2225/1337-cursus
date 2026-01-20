@@ -12,9 +12,9 @@ class Plant:
 
     def age(self):
         self._age += 1
-    
+
     def week_stimulator(self):
-        print(f'=== Day 1 ===')
+        print('=== Day 1 ===')
         self.get_info()
         i = 1
         while i < 7:
@@ -24,6 +24,7 @@ class Plant:
         print(f'=== Day {i} ===')
         self.get_info()
         print(f'growth this week: +{i - 1}cm')
+
 
 plant = Plant("Rose", 25, 30)
 plant.week_stimulator()

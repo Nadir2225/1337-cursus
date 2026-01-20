@@ -12,32 +12,58 @@ class Flower(Plant):
     def __init__(self, name: str, height: int, age: int, color: str) -> None:
         super().__init__(name, height, age)
         self._color = color
-    
+
     def bloom(self):
         print(f'{self._name} is blooming beautifully!')
-    
+
     def get_info(self):
-        print(f'{self._name} (Flower): {self._height}cm, {self._age} days, {self._color} color')
+        print(
+            f'{self._name} (Flower): {self._height}cm, '
+            f'{self._age} days, {self._color} color'
+        )
+
 
 class Tree(Plant):
-    def __init__(self, name: str, height: int, age: int, trunk_diameter: int) -> None:
+    def __init__(
+        self,
+        name: str,
+        height: int,
+        age: int,
+        trunk_diameter: int
+    ) -> None:
         super().__init__(name, height, age)
         self._trunk_diameter = trunk_diameter
-    
+
     def produce_shade(self):
         print(f'{self._name} provides 78 square meters of shade')
 
     def get_info(self):
-        print(f'{self._name} (Tree): {self._height}cm, {self._age} days, {self._trunk_diameter}cm diameter')
+        print(
+            f'{self._name} (Tree): {self._height}cm, '
+            f'{self._age} days, {self._trunk_diameter}cm diameter'
+        )
+
 
 class Vegetable(Plant):
-    def __init__(self, name: str, height: int, age: int, harvest_season: str, nutritional_value: str) -> None:
+    def __init__(
+        self,
+        name: str,
+        height: int,
+        age: int,
+        harvest_season: str,
+        nutritional_value: str
+    ) -> None:
         super().__init__(name, height, age)
         self._harvest_season = harvest_season
-        self._nutritional_value = nutritional_value
-    
+        self.nutritional_value = nutritional_value
+
     def get_info(self):
-        print(f'{self._name} (Vegetable): {self._height}cm, {self._age} days, {self._harvest_season} harvest')
+        print(
+            f'{self._name} (Vegetable): '
+            f'{self._height}cm, {self._age} days, '
+            f'{self.harvest_season} harvest'
+        )
+
 
 print('=== Garden Plant Types ===\n')
 
@@ -52,4 +78,4 @@ oak.get_info()
 oak.produce_shade()
 print()
 tomato.get_info()
-print(tomato._nutritional_value)
+print(tomato.nutritional_value)

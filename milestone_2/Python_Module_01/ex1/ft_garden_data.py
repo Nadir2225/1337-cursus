@@ -4,6 +4,7 @@ class Plant:
         self.height = height
         self.age = age
 
+
 p1 = Plant("Rose", 25, 30)
 p2 = Plant("Sunflower", 80, 45)
 p3 = Plant("Cactus", 15, 120)
