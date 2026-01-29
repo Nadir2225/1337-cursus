@@ -1,16 +1,28 @@
 class GardenError(Exception):
+    """
+        customized error class for a garden error
+    """
     pass
 
 
 class PlantError(GardenError):
+    """
+        customized error class for a plant error
+    """
     pass
 
 
 class WaterError(GardenError):
+    """
+        customized error class for a water error
+    """
     pass
 
 
 def ft_error(plant: str, last_watring: int, tank_lvl: int):
+    """
+        this function raise errors for some customized conditions
+    """
     try:
         if last_watring > 3 and tank_lvl < 10:
             raise GardenError(

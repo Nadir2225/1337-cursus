@@ -1,4 +1,8 @@
 def water_plants(plant_list: list):
+    """
+        this function waters the plants and either the plants
+        are watered or not it executes the finally bloc for cleanup
+    """
     print("Opening watering system")
     try:
         for plant in plant_list:

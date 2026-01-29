@@ -1,4 +1,8 @@
-def garden_operations(error):
+def ft_different_errors(error: int) -> None:
+    """
+        this function takes an int as the number of error and then
+        makes that error and handles it
+    """
     try:
         if error == 0:
             int("abc")
@@ -20,18 +24,18 @@ def garden_operations(error):
 print("=== Garden Error Types Demo ===")
 print()
 print("Testing ValueError...")
-garden_operations(0)
+ft_different_errors(0)
 print()
 print("Testing ZeroDivisionError...")
-garden_operations(1)
+ft_different_errors(1)
 print()
 print("Testing FileNotFoundError...")
-garden_operations(2)
+ft_different_errors(2)
 print()
 print("Testing KeyError...")
-garden_operations(3)
+ft_different_errors(3)
 print()
 print("Testing multiple errors together...")
-garden_operations(4)
+ft_different_errors(4)
 print()
 print("All error types tested successfully!")

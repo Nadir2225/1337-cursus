@@ -1,4 +1,8 @@
 def check_temperature(temp_str: str) -> int:
+    """
+        this function checks the temperature then prints
+        a message and return the correspondent message
+    """
     try:
         temp_str = int(temp_str)
     except ValueError:

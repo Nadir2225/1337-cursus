@@ -1,116 +1,139 @@
 class GardenError(Exception):
-    pass
-
-
-class PlantError(GardenError):
+    """
+        customized error class for a garden error
+    """
     pass
 
 
 class WaterError(GardenError):
+    """
+        customized error class for a water error
+    """
+    pass
+
+
+class SunError(GardenError):
+    """
+        customized error class for a sun error
+    """
     pass
 
 
 class Plant:
+    """
+        this is a class to represent a plant
+    """
     def __init__(self, name: str, water: int, sun: int):
+        """
+            this is a constructor for the plant
+        """
         self._name = name
         self._water = water
         self._sun = sun
 
 
 class GardenManager:
+    """
+        this is a class for the garden managers
+    """
     plants = []
 
     def __init__(self, name, tank):
+        """
+            this is a constructor for the garden manager
+        """
         self._name = name
         self._tank = tank
 
     def add_plant(self, name: str, water: int, sun: int):
-        if not (GardenManager.check_plant_health(name)):
-            return
-        GardenManager.plants.append(Plant(name, water, sun))
-        print(f"Added {name} successfully")
-
-    def water_plants(self):
-        print("Opening watering system")
+        """
+            this is a methode for adding new plants to the garden
+        """
         try:
-            for plant in GardenManager.plants:
-                if isinstance(plant._name, str):
-                    print(f"Watering {plant._name} - success")
-                else:
-                    raise TypeError
-        except TypeError:
-            print(f"Error: Cannot water {plant} - invalid plant!")
-        finally:
-            print("Closing watering system (cleanup)")
-
-    def check_plant_health(plant_name):
-        try:
-            if plant_name == "":
+            if (name == ''):
                 raise ValueError(
-                    "Error adding plant: Plant name cannot be empty!"
-                    )
+                    'Error adding plant: Plant name cannot be empty!'
+                )
+            GardenManager.plants.append(Plant(name, water, sun))
+            print(f"Added {name} successfully")
         except ValueError as e:
             print(e)
-            return 0
-        return 1
 
-    def check_plant_health_print(self):
-        for plant in self.plants:
+    def water_plants(self, water_level: int):
+        """
+            this is a methode for watering the plants
+        """
+        print("Opening watering system")
+        for plant in GardenManager.plants:
+            self._tank -= water_level
+            plant._water += water_level
+            print(f'Watering {plant._name} - success')
+        print("Closing watering system (cleanup)")
+
+    def check_plant_health_print():
+        """
+            this is a methode for checking if the plant health
+        """
+        for plant in GardenManager.plants:
             try:
                 if plant._water < 1:
-                    raise ValueError(
+                    raise WaterError(
                         "Error checking lettuce: Water level"
                         f" {plant._water} is too low (min 1)"
                         )
                 elif plant._water > 10:
-                    raise ValueError(
+                    raise WaterError(
                         f"Error checking lettuce: Water level"
                         f" {plant._water} is too high (max 10)"
                         )
                 elif plant._sun < 2:
-                    raise ValueError(
+                    raise SunError(
                         "Error checking lettuce: Sunlight"
-                        f" hours {plant._sun} is too low (min 2)"
+                        f" hours {plant._sun} is too low (min 5)"
                         )
                 elif plant._sun > 12:
-                    raise ValueError(
+                    raise SunError(
                         "Error checking lettuce: Sunlight"
-                        " hours {plant._sun} is too high (max 12)"
+                        " hours {plant._sun} is too high (max 10)"
                         )
                 else:
                     print(
                         f"{plant._name}: healthy (water:"
                         f" {plant._water}, sun: {plant._sun})"
                         )
-            except ValueError as e:
+            except GardenError as e:
                 print(e)
 
     def tank_check(self):
+        """
+            this is a methode for checking if the tank has enough water
+        """
         try:
             if self._tank < 10:
-                raise GardenError(
+                raise WaterError(
                     "Caught GardenError: Not enough water in tank"
                     )
-        except GardenError as e:
+        except WaterError as e:
             print(e)
+        finally:
+            print("System recovered and continuing...")
 
 
 print("=== Garden Management System ===")
-garden = GardenManager("nadir", 6)
+garden = GardenManager("nadir", 16)
 print()
 print("Adding plants to garden...")
-garden.add_plant("tomate", 5, 8)
-garden.add_plant("lettuce", 15, 8)
+garden.add_plant("tomate", 0, 8)
+garden.add_plant("lettuce", 10, 8)
 garden.add_plant("", 3, 3)
 print()
 print("Watering plants...")
-garden.water_plants()
+garden.water_plants(5)
 print()
 print("Checking plant health...")
-garden.check_plant_health_print()
+GardenManager.check_plant_health_print()
 print()
 print("Testing error recovery...")
 garden.tank_check()
-print("System recovered and continuing...")
 print()
 print("Garden management system test complete!")

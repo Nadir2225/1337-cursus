@@ -1,7 +1,11 @@
 def check_plant_health(plant_name, water_level, sunlight_hours):
+    """
+        this function checks if the plant is healthy if something isnt
+        right it raises that as a valueerror
+    """
     try:
         if plant_name == "":
-            raise ValueError("Error: Plant name cannot be empty!")
+            raise ValueError("Plant name cannot be empty!")
         elif water_level < 1:
             raise ValueError(
                 f"Water level {water_level} is too low (min 1)"
@@ -21,7 +25,7 @@ def check_plant_health(plant_name, water_level, sunlight_hours):
         else:
             return (f"Plant '{plant_name}' is healthy!")
     except ValueError as e:
-        print(e)
+        print(f'Error: {e}')
 
 
 print("=== Garden Plant Health Checker ===")
