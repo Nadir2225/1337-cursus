@@ -9,5 +9,5 @@ EXIT=19,14
 # Output file name
 OUTPUT_FILE=maze.txt
 # Perfect maze (no loops)
-PERFECT=True
-#SEED=02
+PERFECT=False
+SEED=35
