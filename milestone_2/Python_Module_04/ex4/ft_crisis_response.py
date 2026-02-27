@@ -22,7 +22,7 @@ def ft_crisis_response(filename: str, mode: str, content: str | None) -> None:
     else:
         print("STATUS: Normal operations resumed")
     print()
-    
+
 
 if __name__ == '__main__':
     print('=== CYBER ARCHIVES - CRISIS RESPONSE SYSTEM ===\n')

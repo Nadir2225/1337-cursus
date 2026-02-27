@@ -12,7 +12,7 @@ def ft_vault_security():
         f2.write('[CLASSIFIED] New security protocols archived')
         print('[CLASSIFIED] New security protocols archived')
         print('Vault automatically sealed upon completion\n')
-    
+
     print('All vault operations completed with maximum security.')
 
 

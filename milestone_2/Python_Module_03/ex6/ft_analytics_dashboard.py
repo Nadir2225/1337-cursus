@@ -24,7 +24,11 @@ def ft_analytics_dashboard():
             "active": False
         }
     ]
-    high_scores = [player['name'] for player in players if player['score'] > 2000]
+    high_scores = [
+        player['name']
+        for player in players
+        if player['score'] > 2000
+    ]
     scores_doubled = [player['score'] * 2 for player in players]
     active_players = [player['name'] for player in players if player['active']]
 
@@ -48,21 +52,29 @@ def ft_analytics_dashboard():
         {
             "name": "charlie",
             "score": 2150,
-            "achievements": ['win', 'kill', 'quest', 'boss', 'treasure', 'level', 'arena']
+            "achievements": [
+                'win', 'kill', 'quest', 'boss',
+                'treasure', 'level', 'arena'
+            ]
         }
     ]
     players_scores = {player['name']: player['score'] for player in players}
     score_categories = {
         'high': sum(1 for player in players if player['score'] >= 1800),
-        'medium': sum(1 for player in players if 1800 <= player['score'] < 2200),
+        'medium': sum(
+            1 for player in players if 1800 <= player['score'] < 2200
+        ),
         'low': sum(1 for player in players if player['score'] <= 1800)
     }
-    Achievement_counts = {player['name']: len(player['achievements']) for player in players}
+    Achievement_counts = {
+        player['name']: len(player['achievements'])
+        for player in players
+    }
     print(f'Player scores: {players_scores}')
     print(f'Score categories: {score_categories}')
     print(f'Achievement counts: {Achievement_counts}')
     print()
-    print(f'=== Set Comprehension Examples ===')
+    print('=== Set Comprehension Examples ===')
     players = [
         {
             "name": "alice",
@@ -102,7 +114,7 @@ def ft_analytics_dashboard():
         f'Unique achievements: {unique_achievements}\n'
         f'Active regions: {active_regions}\n'
     )
-    print(f'=== Combined Analysis ===')
+    print('=== Combined Analysis ===')
     players = [
         {
             "name": "alice",
@@ -146,16 +158,23 @@ def ft_analytics_dashboard():
         }
     ]
     total_players = len(players)
-    total_unique_achievements = len({achv for player in players for achv in player['achievements']})
+    total_unique_achievements = len({
+        achv for player in players for achv in player['achievements']
+    })
     average_score = sum(player['score'] for player in players) / len(players)
     max_score = max(player['score'] for player in players)
-    top_performer = [player for player in players if player['score'] == max_score][0]
+    top_performer = [
+        player for player in players if player['score'] == max_score
+    ][0]
+    tpn = top_performer['name']
+    tps = top_performer['score']
+    tpa = top_performer['achievements']
     print(
         f'Total players: {total_players}\n'
         f'Total unique achievements: {total_unique_achievements}\n'
         f'Average score: {average_score}\n'
-        f'Top performer: {top_performer['name']} ({top_performer['score']} points, '
-        f'{len(top_performer['achievements'])} achievements)'
+        f'Top performer: {tpn} ({tps} points, '
+        f'{len(tpa)} achievements)'
     )
 
 

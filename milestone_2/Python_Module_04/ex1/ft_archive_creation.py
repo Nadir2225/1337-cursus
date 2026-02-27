@@ -1,6 +1,6 @@
 def ft_archive_creation():
     print('=== CYBER ARCHIVES - PRESERVATION SYSTEM ===\n')
-    
+
     filename = "new_discovery.txt"
 
     print(f"Initializing new storage unit: {filename}")
@@ -18,6 +18,7 @@ def ft_archive_creation():
     f.close()
     print("\nData inscription complete. Storage unit sealed.")
     print(f"Archive '{filename}' ready for long-term preservation.")
+
 
 if __name__ == '__main__':
     ft_archive_creation()

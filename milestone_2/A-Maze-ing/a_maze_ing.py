@@ -6,6 +6,12 @@ from adnane import solve_maze_shortest
 class ConfigSyntaxError(Exception):
     pass
 
+class MazeDimensionsError(Exception):
+    pass
+
+class OutOfMazeError(Exception):
+    pass
+
 def str_to_bool(s: str) -> bool:
     if s == "True":
         return True
@@ -53,12 +59,24 @@ def validate_config(filename: str) -> Config:
                 perfect=str_to_bool(config_dict.get('PERFECT')),
                 seed=seed_value
             )
+            if config_object.width < 8 or config_object.height < 8:
+                raise MazeDimensionsError
+            if config_object.entry.x >= config_object.width or config_object.exit.x >= config_object.width:
+                raise OutOfMazeError
+            if config_object.entry.y >= config_object.height or config_object.exit.y >= config_object.height:
+                raise OutOfMazeError
             return config_object
     except PermissionError as e:
         print('grant permissions')
         sys.exit(1)
     except FileNotFoundError as e:
         print('file not found')
+        sys.exit(1)
+    except MazeDimensionsError as e:
+        print('maze should at least be 8x8')
+        sys.exit(1)
+    except OutOfMazeError as e:
+        print('Out of Maze Error: entry and exit should belong to the maze')
         sys.exit(1)
     except ConfigSyntaxError as e:
         print(e)
@@ -76,4 +94,9 @@ if __name__ == '__main__':
     maze_gen = MazeGenerator(config)
     maze_gen.generate()
     maze = maze_gen.maze
-    print(solve_maze_shortest(maze, config.entry, config.exit))
+    maze.print_maze(
+        entry=config.entry,
+        exit=config.exit,
+        # path_cells=path_set
+    )
+    # print(solve_maze_shortest(maze, config.entry, config.exit))

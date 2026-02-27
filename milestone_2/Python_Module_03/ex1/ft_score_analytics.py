@@ -1,5 +1,6 @@
 import sys
 
+
 def ft_score_analytics():
     print('=== Player Score Analytics ===')
     if len(sys.argv) > 1:
@@ -19,13 +20,14 @@ def ft_score_analytics():
             print(f'High score: {max(scores)}')
             print(f'Low score: {min(scores)}')
             print(f'Score range: {max(scores) - min(scores)}\n')
-        except ValueError as e:
+        except ValueError:
             print('all arguments should be valid scores(a number)')
     else:
         print(
             'No scores provided. Usage: python3 '
             'ft_score_analytics.py <score1> <score2> ...'
         )
+
 
 if __name__ == '__main__':
     ft_score_analytics()

@@ -1,5 +1,6 @@
 import sys
 
+
 def ft_stream_management():
     print('=== CYBER ARCHIVES - COMMUNICATION SYSTEM ===\n')
     id = input('Input Stream active. Enter archivist ID: ')
@@ -19,6 +20,7 @@ def ft_stream_management():
     )
 
     print("Three-channel communication test successful.")
+
 
 if __name__ == '__main__':
     ft_stream_management()

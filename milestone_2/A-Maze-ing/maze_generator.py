@@ -1,10 +1,36 @@
 from my_types import Config, Maze, Cell, Coords
 import random
 
+DIGIT_4 = [
+    [1,0,1,0],
+    [1,0,1,0],
+    [1,1,1,0],
+    [0,0,1,0],
+    [0,0,1,0],
+]
+
+DIGIT_2 = [
+    [1,1,1,0],
+    [0,0,1,0],
+    [1,1,1,0],
+    [1,0,0,0],
+    [1,1,1,0],
+]
+PATTERN_42 = [
+    "X  X XX ",
+    "X  X  X ",
+    "XXXX  X ",
+    "   X XX ",
+    "   X X  ",
+    "   X XX ",
+]
+
 class MazeGenerator:
     """
     Generates a maze according to configuration.
     """
+
+    # Each digit is 5 tall x 4 wide, with 1 col gap between
 
     def __init__(
         self,
@@ -13,17 +39,17 @@ class MazeGenerator:
         self.config = config
         self.maze = Maze(config.width, config.height)
 
-    def generate(self) -> None:
-        """
-        Generate the maze.
-        """
-        if self.config.seed:
-            random.seed(self.config.seed)
-        self.maze.create_grid()
+    # def generate(self) -> None:
+    #     """
+    #     Generate the maze.
+    #     """
+    #     if self.config.seed:
+    #         random.seed(self.config.seed)
+    #     self.maze.create_grid()
 
-        self._generate_perfect_maze()
-        if not self.config.perfect:
-            self._generate_imperfect_maze()
+    #     self._generate_perfect_maze()
+    #     if not self.config.perfect:
+    #         self._generate_imperfect_maze()
 
         # self.maze.print_maze(self.config.entry, self.config.exit)
 
@@ -139,3 +165,81 @@ class MazeGenerator:
             neighbor.south = False
         else:
             raise ValueError("Cells are not adjacent")
+
+    def apply_42_pattern(self) -> bool:
+        """
+        Fully hard-coded '42' pattern.
+        Assumes maze is at least 8x8.
+        No loops. No dynamic building.
+        """
+
+        start_x = (self.maze.width - 9) // 2
+        start_y = (self.maze.height - 5) // 2
+
+        def seal(x, y):
+            cell = self.maze.get_cell(Coords(x, y))
+            if cell:
+                cell.north = True
+                cell.east = True
+                cell.south = True
+                cell.west = True
+                self._seal_cell_neighbors(cell)
+
+        seal(start_x + 0, start_y + 0)
+        seal(start_x + 3, start_y + 0)
+
+        seal(start_x + 0, start_y + 1)
+        seal(start_x + 3, start_y + 1)
+
+        seal(start_x + 0, start_y + 2)
+        seal(start_x + 1, start_y + 2)
+        seal(start_x + 2, start_y + 2)
+        seal(start_x + 3, start_y + 2)
+
+        seal(start_x + 3, start_y + 3)
+        seal(start_x + 3, start_y + 4)
+
+        offset = 5
+
+        seal(start_x + offset + 0, start_y + 0)
+        seal(start_x + offset + 1, start_y + 0)
+        seal(start_x + offset + 2, start_y + 0)
+        seal(start_x + offset + 3, start_y + 0)
+
+        seal(start_x + offset + 3, start_y + 1)
+
+        seal(start_x + offset + 0, start_y + 2)
+        seal(start_x + offset + 1, start_y + 2)
+        seal(start_x + offset + 2, start_y + 2)
+        seal(start_x + offset + 3, start_y + 2)
+
+        seal(start_x + offset + 0, start_y + 3)
+
+        seal(start_x + offset + 0, start_y + 4)
+        seal(start_x + offset + 1, start_y + 4)
+        seal(start_x + offset + 2, start_y + 4)
+        seal(start_x + offset + 3, start_y + 4)
+
+        return True
+
+    def _seal_cell_neighbors(self, cell: Cell) -> None:
+        """Ensure neighboring cells have matching walls for a sealed cell."""
+        x, y = cell.coords.x, cell.coords.y
+        for direction, (dx, dy), opp in [
+            ('north', (0,-1), 'south'),
+            ('east',  (1, 0), 'west'),
+            ('south', (0, 1), 'north'),
+            ('west',  (-1,0), 'east'),
+        ]:
+            neighbor = self.maze.get_cell(Coords(x+dx, y+dy))
+            if neighbor:
+                setattr(neighbor, opp, True)
+
+    def generate(self) -> None:
+        if self.config.seed:
+            random.seed(self.config.seed)
+        self.maze.create_grid()
+        self._generate_perfect_maze()
+        if not self.config.perfect:
+            self._generate_imperfect_maze()
+        self.apply_42_pattern()  # ← add this

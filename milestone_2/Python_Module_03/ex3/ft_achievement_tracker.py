@@ -1,7 +1,10 @@
 def ft_achievement_tracker():
     alice = {'first_kill', 'level_10', 'treasure_hunter', 'speed_demon'}
     bob = {'first_kill', 'level_10', 'boss_slayer', 'collector'}
-    charlie = {'level_10', 'treasure_hunter', 'boss_slayer', 'speed_demon', 'perfectionist'}
+    charlie = {
+        'level_10', 'treasure_hunter', 'boss_slayer',
+        'speed_demon', 'perfectionist'
+    }
     print('=== Achievement Tracker System ===')
     print()
     print(f'Player alice achievements: {alice}')
@@ -25,7 +28,7 @@ def ft_achievement_tracker():
         players_nbr += 1
     if (len(charlie_unique)):
         players_nbr += 1
-    rare = alice_unique.union(bob_unique).union(charlie_unique)  
+    rare = alice_unique.union(bob_unique).union(charlie_unique)
     print(f'Common to all players: {common}')
     print(f'Rare achievements (1 player): {rare}')
     # print(f'Rare achievements ({players_nbr} player): {rare}')
@@ -33,6 +36,7 @@ def ft_achievement_tracker():
     print(f'Alice vs Bob common: {alice.intersection(bob)}')
     print(f'Alice unique: {alice.difference(bob)}')
     print(f'Bob unique: {bob.difference(alice)}')
+
 
 if __name__ == '__main__':
     ft_achievement_tracker()

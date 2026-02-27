@@ -2,8 +2,8 @@ def total_value_and_item_count(player: dict) -> tuple:
     total_value = 0
     item_count = 0
     for item in player:
-        quantities = player[item]['quantities']
-        value = player[item]['value']
+        quantities = player[item].get('quantities')
+        value = player[item].get('value')
         total_value += quantities * value
         item_count += quantities
     return (total_value, item_count)
@@ -59,13 +59,20 @@ def ft_inventory_system():
             f"gold each = {quantities * value} gold "
         )
     print()
-    
-    print(f"Inventory value: {total_value_and_item_count(players['Alice'])[0]} gold")
-    print(f"Item count: {total_value_and_item_count(players['Alice'])[1]} items")
+
+    print(
+        f"Inventory value: {total_value_and_item_count(players['Alice'])[0]}"
+        " gold"
+    )
+    print(
+        f"Item count: {total_value_and_item_count(players['Alice'])[1]}"
+        " items"
+    )
     print("Categories: ", end="")
     i = 0
     for item in players['Alice']:
-        print(f' {players['Alice'][item]["type"]}({item})', end='')
+        item_type = players['Alice'][item]["type"]
+        print(f' {item_type}({item})', end='')
         if i != len(players['Alice']) - 1:
             print(',', end='')
         i += 1
@@ -98,13 +105,25 @@ def ft_inventory_system():
         for item in players[player]:
             if (players[player][item]['rarity'] == 'rare'):
                 ri += [item]
-        if (total_value_and_item_count(players[player])[0] > total_value_and_item_count(players[mvp])[0]):
+        if (
+            total_value_and_item_count(players[player])[0]
+            > total_value_and_item_count(players[mvp])[0]
+        ):
             mvp = player
-        if (total_value_and_item_count(players[player])[1] > total_value_and_item_count(players[mip])[1]):
+        if (
+            total_value_and_item_count(players[player])[1]
+            > total_value_and_item_count(players[mip])[1]
+        ):
             mip = player
-    print(f"Most valuable player: {mvp} ({total_value_and_item_count(players[mvp])[0]} gold)")
-    print(f"Most items player: {mip} ({total_value_and_item_count(players[mip])[1]} items)")
-    print(f"Rarest items: ", end='')
+    print(
+        f"Most valuable player: {mvp} "
+        f"({total_value_and_item_count(players[mvp])[0]} gold)"
+    )
+    print(
+        f"Most items player: {mip} "
+        f"({total_value_and_item_count(players[mip])[1]} items)"
+    )
+    print("Rarest items: ", end='')
     i = 0
     for item in ri:
         print(f'{item}', end='')
@@ -115,7 +134,5 @@ def ft_inventory_system():
         i += 1
 
 
-    
 if __name__ == '__main__':
     ft_inventory_system()
-

@@ -9,5 +9,6 @@ def ft_ancient_text():
     f.close()
     print('\nData recovery complete. Storage unit disconnected.')
 
+
 if __name__ == '__main__':
     ft_ancient_text()

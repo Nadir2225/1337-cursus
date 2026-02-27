@@ -1,9 +1,9 @@
 # === MAZE CONFIGURATION FILE ===
 # Lines starting with # are comments
 WIDTH=20
-HEIGHT=15
+HEIGHT=19
 # Entry point (x,y)
-ENTRY=0,0
+ENTRY=0,9
 # Exit point (x,y)
 EXIT=19,14
 # Output file name

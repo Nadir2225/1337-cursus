@@ -8,14 +8,14 @@ def infinit_fib():
         fib_num = next_fib
         next_fib = next_fib + tmp
 
+
 def is_prime(n: int) -> bool:
     if (n == 0 or n == 1):
         return False
     for i in range(1, n + 1):
-        if ((n % i == 0) and not(i == 1 or i == n)):
+        if ((n % i == 0) and not (i == 1 or i == n)):
             return False
     return True
-        
 
 
 def infinit_primes():
@@ -36,6 +36,7 @@ def event_generator(n: int):
 
     for i in range(n):
         yield lst[i % len(lst)]
+
 
 def ft_data_stream():
     print("=== Game Data Stream Processor ===")
@@ -80,7 +81,7 @@ def ft_data_stream():
     fibo = infinit_fib()
     for i in range(10):
         print(f" {next(fibo)}", end="")
-        if not ( i == 9):
+        if not (i == 9):
             print(',', end='')
     print()
 
@@ -88,9 +89,10 @@ def ft_data_stream():
     prime = infinit_primes()
     for i in range(5):
         print(f" {next(prime)}", end="")
-        if not ( i == 4):
+        if not (i == 4):
             print(',', end='')
     print()
+
 
 if __name__ == '__main__':
     ft_data_stream()
