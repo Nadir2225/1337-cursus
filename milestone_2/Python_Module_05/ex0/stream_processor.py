@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
+
 class DataProcessor(ABC):
     @abstractmethod
     def process(self, data: Any) -> str:
@@ -13,6 +14,7 @@ class DataProcessor(ABC):
     def format_output(self, result: str) -> str:
         return ("Output: " + result)
 
+
 class NumericProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
         try:
@@ -23,19 +25,24 @@ class NumericProcessor(DataProcessor):
             return False
 
     def process(self, data: Any) -> str:
-        return (f'Processed {len(data)} numeric values,'+
-            f' sum={sum(data)}, avg={sum(data) / len(data)}')
-    
+        return (f'Processed {len(data)} numeric values,' +
+                f' sum={sum(data)}, avg={sum(data) / len(data)}')
+
+
 class TextProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
-        try:            
+        try:
             str(data)
             return True
         except (ValueError, TypeError):
-            return False    
+            return False
 
     def process(self, data: Any) -> str:
-        return (f'Processed text: {len(data)} characters, {len(data.split())} words')
+        return (
+            f'Processed text: {len(data)} characters,'
+            f' {len(data.split())} words'
+        )
+
 
 class LogProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
@@ -48,6 +55,7 @@ class LogProcessor(DataProcessor):
     def process(self, data: Any) -> str:
         return data
 
+
 if __name__ == '__main__':
     print("=== CODE NEXUS - DATA PROCESSOR FOUNDATION ===\n")
     print("Initializing Numeric Processor...")
@@ -55,7 +63,7 @@ if __name__ == '__main__':
     data = [1, 2, 3, 4, 5]
     print(f"Processing data: {data}")
     if numP.validate(data):
-            print('Validation: Numeric data verified')
+        print('Validation: Numeric data verified')
     msg = numP.format_output(numP.process(data))
     print(msg)
     print()
@@ -76,13 +84,15 @@ if __name__ == '__main__':
     print(f"Processing data: \"{data}\"")
     if logP.validate(data):
         print('Validation: Log entry verified')
-    msg = logP.format_output(logP.process("[ALERT] ERROR level detected: Connection timeout"))
+    msg = logP.format_output(
+        logP.process("[ALERT] ERROR level detected: Connection timeout")
+    )
     print(msg)
     print()
 
     print("=== Polymorphic Processing Demo ===")
     proc_datas = [
-        (numP, [1, 2, 3]), 
+        (numP, [1, 2, 3]),
         (textP, "Hello World!"),
         (logP, "[INFO] INFO level detected: System ready")
     ]

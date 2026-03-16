@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
-
-from typing import Any, List, Dict, Union, Optional, Protocol
+from typing import Any, List, Dict, Union, Protocol
 from abc import ABC, abstractmethod
 
 
@@ -23,13 +21,15 @@ class TransformStage:
 
 class OutputStage:
     def process(self, data: Any) -> str:
-        return  data["transformed"]
+        return data["transformed"]
 
 
 class ProcessingPipeline(ABC):
     def __init__(self, pipeline_id: str) -> None:
         self.pipeline_id: str = pipeline_id
-        self.stages: List[ProcessingStage] = [InputStage(), TransformStage(), OutputStage()]
+        self.stages: List[ProcessingStage] = [
+            InputStage(), TransformStage(), OutputStage()
+        ]
 
     def add_stage(self, stage: ProcessingStage) -> None:
         self.stages.append(stage)
@@ -50,9 +50,13 @@ class JSONAdapter(ProcessingPipeline):
                 if (isinstance(stage, InputStage)):
                     success_message += f'Input: {data}\n'
                 elif (isinstance(stage, TransformStage)):
-                    if ("sensor" not in data) or ("value" not in data) or ("unit" not in data):
+                    if ("sensor" not in data):
                         raise ValueError("Missing 'temp' field in JSON data")
-                    success_message += "Transform: Enriched with metadata and validation\n"
+                    if ("value" not in data) or ("unit" not in data):
+                        raise ValueError("Missing 'temp' field in JSON data")
+                    success_message += (
+                        "Transform: Enriched with metadata and validation\n"
+                    )
                 elif (isinstance(stage, OutputStage)):
                     range = 'Normal'
                     if data['value'] > 30:
@@ -60,7 +64,10 @@ class JSONAdapter(ProcessingPipeline):
                     elif data['value'] < 15:
                         range = 'Low'
 
-                    output = f"Processed temperature reading: {data['value']}°{data['unit']} ({range} range)"
+                    output = (
+                        f"Processed temperature reading: {data['value']}°"
+                        f"{data['unit']} ({range} range)"
+                    )
                     success_message += f"Output: {output}"
                 result = stage.process(result)
                 i += 1
@@ -69,7 +76,7 @@ class JSONAdapter(ProcessingPipeline):
             print(success_message)
 
             return output
-        
+
         except Exception:
             print("=== Error Recovery Test ===")
             print("Simulating pipeline failure...")
@@ -89,11 +96,16 @@ class CSVAdapter(ProcessingPipeline):
                 if (isinstance(stage, InputStage)):
                     success_message += f'Input: "{data}"\n'
                 elif (isinstance(stage, TransformStage)):
-                    success_message += "Transform: Parsed and structured data\n"
+                    success_message += (
+                        "Transform: Parsed and structured data\n"
+                    )
                 elif (isinstance(stage, OutputStage)):
                     csv_data = data.split(",")
                     actions = [x for x in csv_data if x == "action"]
-                    output = f"User activity logged: {len(actions)} actions processed"
+                    output = (
+                        f"User activity logged: {len(actions)}"
+                        " actions processed"
+                    )
                     success_message += f"Output: {output}"
                 result = stage.process(result)
                 i += 1
@@ -102,7 +114,7 @@ class CSVAdapter(ProcessingPipeline):
             print(success_message)
 
             return output
-        
+
         except Exception:
             print("=== Error Recovery Test ===")
             print("Simulating pipeline failure...")
@@ -133,13 +145,14 @@ class StreamAdapter(ProcessingPipeline):
             print(success_message)
 
             return output
-        
+
         except Exception:
             print("=== Error Recovery Test ===")
             print("Simulating pipeline failure...")
             print(f"Error detected in Stage {i}: Invalid data format")
             print("Recovery initiated: Switching to backup processor")
             print("Recovery successful: Pipeline restored, processing resumed")
+
 
 class NexusManager:
 
@@ -148,10 +161,10 @@ class NexusManager:
 
     def add_pipeline(self, pipeline: ProcessingPipeline) -> None:
         self.pipelines.append(pipeline)
-    
-    def process(self, data: Any) -> None:
+
+    def process_data(self, data: Any) -> None:
         for pipeline in self.pipelines:
-            result = pipeline.process(data)
+            pipeline.process(data)
 
 
 def main() -> None:
@@ -188,7 +201,7 @@ def main() -> None:
 
         elif isinstance(pipeline, StreamAdapter):
             pipeline.process("Real-time sensor stream")
-        
+
         if pipeline_number != 0:
             pipeline_chain += " -> "
         pipeline_chain += f"Pipeline {alphabet[pipeline_number]}"
@@ -201,11 +214,9 @@ def main() -> None:
     print("Chain result: 100 records processed through 3-stage pipeline")
     print("Performance: 95% efficiency, 0.2s total processing time\n")
 
-    
-    stream_pipeline.process(None)
+    json_pipeline.process(None)
 
     print("\nNexus Integration complete. All systems operational.")
-
 
 
 if __name__ == "__main__":

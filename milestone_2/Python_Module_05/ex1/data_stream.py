@@ -38,10 +38,15 @@ class SensorStream(DataStream):
         try:
             self.processed += len(data_batch)
 
-            temps = [float(x.split(":")[1]) for x in data_batch if "temp:" in str(x)]
+            temps = [
+                float(x.split(":")[1]) for x in data_batch if "temp:" in str(x)
+            ]
             avg = sum(temps) / len(temps) if temps else 0
 
-            return f"Sensor analysis: {len(data_batch)} readings processed, avg temp: {avg}°C"
+            return (
+                f"Sensor analysis: {len(data_batch)} readings processed"
+                f", avg temp: {avg}°C"
+            )
         except Exception as e:
             return f"Sensor error: {e}"
 
@@ -52,13 +57,18 @@ class TransactionStream(DataStream):
         try:
             self.processed += len(data_batch)
             for item in data_batch:
-                if not isinstance(item, str) or ("buy:" not in item and "sell:" not in item):
+                if not isinstance(item, str):
+                    raise ValueError(f"Invalid transaction format: {item}")
+                elif ("buy:" not in item and "sell:" not in item):
                     raise ValueError(f"Invalid transaction format: {item}")
             buy = [int(x.split(":")[1]) for x in data_batch if "buy:" in x]
             sell = [int(x.split(":")[1]) for x in data_batch if "sell:" in x]
             net = sum(buy) - sum(sell)
 
-            return f"Transaction analysis: {len(data_batch)} operations, net flow: {'+' if net >= 0 else ''}{net} units"
+            return (
+                f"Transaction analysis: {len(data_batch)} operations, "
+                f"net flow: {'+' if net >= 0 else ''}{net} units"
+            )
         except Exception as e:
             return f"Transaction error: {e}"
 
@@ -70,20 +80,24 @@ class EventStream(DataStream):
             self.processed += len(data_batch)
 
             errors = [e for e in data_batch if "error" in str(e).lower()]
-
-            return f"Event analysis: {len(data_batch)} events, {len(errors)} error detected"
+            return (
+                f"Event analysis: {len(data_batch)} events, "
+                f"{len(errors)} error detected"
+            )
         except Exception as e:
             return f"Event error: {e}"
 
+
 def data_type(obj: Any) -> tuple:
-        if obj.__class__.__name__ == "SensorStream":
-            return ("Sensor data", "readings")
-        elif obj.__class__.__name__ == "TransactionStream":
-            return ("Transaction data", "operations")
-        elif obj.__class__.__name__ == "EventStream":
-            return ("Event data", "events")
-        else:
-            return ("Unknown data type", "unknown")
+    if obj.__class__.__name__ == "SensorStream":
+        return ("Sensor data", "readings")
+    elif obj.__class__.__name__ == "TransactionStream":
+        return ("Transaction data", "operations")
+    elif obj.__class__.__name__ == "EventStream":
+        return ("Event data", "events")
+    else:
+        return ("Unknown data type", "unknown")
+
 
 class StreamProcessor:
 
@@ -102,8 +116,10 @@ class StreamProcessor:
         for stream in self.streams:
             stream.process_batch(batches[index])
             index += 1
-            print(f"- {data_type(stream)[0]}: {stream.processed} {data_type(stream)[1]} processed")
-
+            print(
+                f"- {data_type(stream)[0]}: {stream.processed}"
+                f" {data_type(stream)[1]} processed"
+            )
 
 
 if __name__ == "__main__":
