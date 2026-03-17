@@ -34,6 +34,9 @@ class DataStream(ABC):
 
 class SensorStream(DataStream):
 
+    def __init__(self, stream_id: str):
+        super().__init__(stream_id)
+
     def process_batch(self, data_batch: List[Any]) -> str:
         try:
             self.processed += len(data_batch)

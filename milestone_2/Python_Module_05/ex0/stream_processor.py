@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, List, Dict, Union, Optional
 
 
 class DataProcessor(ABC):
@@ -16,22 +16,29 @@ class DataProcessor(ABC):
 
 
 class NumericProcessor(DataProcessor):
-    def validate(self, data: Any) -> bool:
+    def validate(self, data: Optional[List]) -> bool:
         try:
+            if len(data) == 0:
+                return False
             for num in data:
                 int(num)
             return True
-        except (ValueError, TypeError):
+        except Exception:
             return False
 
     def process(self, data: Any) -> str:
         return (f'Processed {len(data)} numeric values,' +
                 f' sum={sum(data)}, avg={sum(data) / len(data)}')
 
+    def format_output(self, result: str) -> str:
+        return super().format_output(result)
+
 
 class TextProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
         try:
+            if data is None:
+                return False
             str(data)
             return True
         except (ValueError, TypeError):
@@ -47,6 +54,8 @@ class TextProcessor(DataProcessor):
 class LogProcessor(DataProcessor):
     def validate(self, data: Any) -> bool:
         try:
+            if data is None:
+                return False
             str(data)
             return True
         except (ValueError, TypeError):
@@ -74,8 +83,8 @@ if __name__ == '__main__':
     print(f"Processing data: \"{data}\"")
     if textP.validate(data):
         print('Validation: Text data verified')
-    msg = textP.format_output(textP.process(data))
-    print(msg)
+        msg = textP.format_output(textP.process(data))
+        print(msg)
     print()
 
     print("Initializing Log Processor...")
@@ -84,22 +93,32 @@ if __name__ == '__main__':
     print(f"Processing data: \"{data}\"")
     if logP.validate(data):
         print('Validation: Log entry verified')
-    msg = logP.format_output(
-        logP.process("[ALERT] ERROR level detected: Connection timeout")
-    )
-    print(msg)
+        msg = logP.format_output(
+            logP.process("[ALERT] ERROR level detected: Connection timeout")
+        )
+        print(msg)
     print()
 
     print("=== Polymorphic Processing Demo ===")
-    proc_datas = [
-        (numP, [1, 2, 3]),
-        (textP, "Hello World!"),
-        (logP, "[INFO] INFO level detected: System ready")
+    proc_datas: List[Dict[DataProcessor, Union[int, List[int], str]]] = [
+        {
+            "process": numP,
+            "batch": [1, 2, 3]
+        },
+        {
+            "process": textP,
+            "batch": "Hello World!"
+        },
+        {
+            "process": logP,
+            "batch": "[INFO] INFO level detected: System ready"
+        }
     ]
     print("Processing multiple data types through same interface...")
     i = 1
     for proc_data in proc_datas:
-        print(f"Result {i}: {proc_data[0].process(proc_data[1])}")
+        res = proc_data["process"].process(proc_data["batch"])
+        print(f"Result {i}: {res}")
         i += 1
     print()
 

@@ -1,4 +1,4 @@
-from typing import Any, List, Dict, Union, Protocol
+from typing import Any, List, Dict, Optional, Union, Protocol
 from abc import ABC, abstractmethod
 
 
@@ -41,7 +41,7 @@ class ProcessingPipeline(ABC):
 
 class JSONAdapter(ProcessingPipeline):
 
-    def process(self, data: Any) -> Union[str, Any]:
+    def process(self, data: Any) -> Optional[Union[str, Any]]:
         i = 1
         try:
             result = data
