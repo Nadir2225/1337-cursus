@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "ex1"
+version = "0.1.0"
+description = ""
+authors = ["nel-ouad"]
+
+[tool.poetry.dependencies]
+python = ">=3.10"
+pandas = "*"
+requests = "*"
+matplotlib = "*"
+numpy = "*"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
