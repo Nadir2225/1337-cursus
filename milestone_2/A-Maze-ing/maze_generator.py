@@ -131,7 +131,7 @@ class MazeGenerator:
         else:
             raise ValueError("Cells are not adjacent")
 
-    def apply_42_pattern(self):
+    def apply_42_pattern(self) -> None:
         """
         Fully hard-coded '42' pattern.
         Assumes maze is at least 8x8.
@@ -210,7 +210,11 @@ class MazeGenerator:
                 right = self.maze.get_cell(Coords(x + 1, y))
                 bottom = self.maze.get_cell(Coords(x, y + 1))
                 left = self.maze.get_cell(Coords(x - 1, y))
-                if not center or not top or not right or not left or not bottom:
+                if (
+                    not center or not top
+                    or not right or not left
+                    or not bottom
+                ):
                     continue
                 if (
                     not center.north and not center.east
@@ -236,11 +240,71 @@ class MazeGenerator:
             self._generate_perfect_maze()
             if not self.config.perfect:
                 self._generate_imperfect_maze()
+            # i = 0
+            # self.open_room()
             while self.open_rooms_exist():
                 self.maze.create_grid()
                 self.apply_42_pattern()
                 self._generate_perfect_maze()
                 if not self.config.perfect:
                     self._generate_imperfect_maze()
+                # self.open_room()
+                # if i < 10:
+                #     print("Retrying maze generation to avoid open rooms...")
+                # else:
+                #     break
+                # i += 1
         except Exception as e:
             raise e
+
+    def open_room(self) -> None:
+        """
+        use the following configuration to test open room detection:
+            # === MAZE CONFIGURATION FILE ===
+            # Lines starting with # are comments
+            WIDTH=9
+            HEIGHT=9
+            # Entry point (x,y)
+            ENTRY=2,5
+            # Exit point (x,y)
+            EXIT=7,7
+            # Output file name
+            OUTPUT_FILE=maze.txt
+            # Perfect maze (no loops)
+            PERFECT=True
+            SEED=355
+        """
+        center = self.maze.get_cell(Coords(1, 7))
+        top = self.maze.get_cell(Coords(1, 6))
+        right = self.maze.get_cell(Coords(2, 7))
+        bottom = self.maze.get_cell(Coords(1, 8))
+        left = self.maze.get_cell(Coords(0, 7))
+        top_right = self.maze.get_cell(Coords(2, 6))
+        top_left = self.maze.get_cell(Coords(0, 6))
+        bottom_right = self.maze.get_cell(Coords(2, 8))
+        bottom_left = self.maze.get_cell(Coords(0, 8))
+        if (
+            center and top and right and bottom
+            and left and top_right and top_left
+            and bottom_right and bottom_left
+        ):
+            center.north = False
+            center.east = False
+            center.south = False
+            center.west = False
+            top.east = False
+            top.west = False
+            right.north = False
+            right.south = False
+            bottom.east = False
+            bottom.west = False
+            left.north = False
+            left.south = False
+            top_right.west = False
+            top_right.south = False
+            top_left.east = False
+            top_left.south = False
+            bottom_right.north = False
+            bottom_right.west = False
+            bottom_left.north = False
+            bottom_left.east = False
