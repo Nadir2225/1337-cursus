@@ -1,29 +1,7 @@
+import time
 from my_types import Config, Maze, Cell, Coords
 import random
 
-DIGIT_4 = [
-    [1,0,1,0],
-    [1,0,1,0],
-    [1,1,1,0],
-    [0,0,1,0],
-    [0,0,1,0],
-]
-
-DIGIT_2 = [
-    [1,1,1,0],
-    [0,0,1,0],
-    [1,1,1,0],
-    [1,0,0,0],
-    [1,1,1,0],
-]
-PATTERN_42 = [
-    "X  X XX ",
-    "X  X  X ",
-    "XXXX  X ",
-    "   X XX ",
-    "   X X  ",
-    "   X XX ",
-]
 
 class MazeGenerator:
     """
@@ -39,20 +17,6 @@ class MazeGenerator:
         self.config = config
         self.maze = Maze(config.width, config.height)
 
-    # def generate(self) -> None:
-    #     """
-    #     Generate the maze.
-    #     """
-    #     if self.config.seed:
-    #         random.seed(self.config.seed)
-    #     self.maze.create_grid()
-
-    #     self._generate_perfect_maze()
-    #     if not self.config.perfect:
-    #         self._generate_imperfect_maze()
-
-        # self.maze.print_maze(self.config.entry, self.config.exit)
-
     def _generate_perfect_maze(self) -> None:
         """
         Generate a perfect maze (DFS / backtracker).
@@ -62,7 +26,7 @@ class MazeGenerator:
         start_cell = self.maze.get_cell(self.config.entry)
         if not start_cell:
             raise ValueError("Invalid entry coordinates")
-        
+
         start_cell.visited = True
         stack.append(start_cell)
 
@@ -78,9 +42,11 @@ class MazeGenerator:
             ]
 
             for direction, (dx, dy) in directions:
-                neighbor_coords = Coords(current.coords.x + dx, current.coords.y + dy)
+                neighbor_coords = Coords(
+                    current.coords.x + dx, current.coords.y + dy
+                )
                 neighbor = self.maze.get_cell(neighbor_coords)
-                if neighbor and not neighbor.visited:
+                if neighbor and not neighbor.visited and not neighbor.pattern:
                     neighbors.append(neighbor)
 
             if neighbors:
@@ -90,7 +56,7 @@ class MazeGenerator:
                 stack.append(next_cell)
             else:
                 stack.pop()
-    
+
     def _generate_imperfect_maze(self) -> None:
         """
         Generate an imperfect maze by creating a perfect maze first,
@@ -143,7 +109,6 @@ class MazeGenerator:
                         removed += 1
                         break
 
-
     def _remove_walls(self, current: Cell, neighbor: Cell) -> None:
         """
         Remove walls between two adjacent cells.
@@ -166,80 +131,89 @@ class MazeGenerator:
         else:
             raise ValueError("Cells are not adjacent")
 
-    def apply_42_pattern(self) -> bool:
+    def apply_42_pattern(self):
         """
         Fully hard-coded '42' pattern.
         Assumes maze is at least 8x8.
         No loops. No dynamic building.
         """
 
-        start_x = (self.maze.width - 9) // 2
-        start_y = (self.maze.height - 5) // 2
+        start_x = (self.maze.width + 1) // 2
+        start_y = (self.maze.height + 1) // 2
 
-        def seal(x, y):
+        def seal(x: int, y: int) -> None:
             cell = self.maze.get_cell(Coords(x, y))
             if cell:
                 cell.north = True
                 cell.east = True
                 cell.south = True
                 cell.west = True
+                cell.pattern = True
+                cell.visited = True
                 self._seal_cell_neighbors(cell)
 
-        seal(start_x + 0, start_y + 0)
-        seal(start_x + 3, start_y + 0)
+        # number 2
+        seal(start_x, start_y)
+        seal(start_x, start_y - 1)
+        seal(start_x + 1, start_y - 1)
+        seal(start_x + 2, start_y - 1)
+        seal(start_x + 2, start_y - 2)
+        seal(start_x + 2, start_y - 3)
+        seal(start_x + 1, start_y - 3)
+        seal(start_x, start_y - 3)
+        seal(start_x, start_y + 1)
+        seal(start_x + 1, start_y + 1)
+        seal(start_x + 2, start_y + 1)
 
-        seal(start_x + 0, start_y + 1)
-        seal(start_x + 3, start_y + 1)
+        # number 4
+        start_x -= 2
+        seal(start_x, start_y)
+        seal(start_x, start_y - 1)
+        seal(start_x, start_y - 2)
+        seal(start_x, start_y - 3)
+        seal(start_x - 1, start_y - 1)
+        seal(start_x - 2, start_y - 1)
+        seal(start_x - 2, start_y - 2)
+        seal(start_x - 2, start_y - 3)
+        seal(start_x, start_y + 1)
 
-        seal(start_x + 0, start_y + 2)
-        seal(start_x + 1, start_y + 2)
-        seal(start_x + 2, start_y + 2)
-        seal(start_x + 3, start_y + 2)
-
-        seal(start_x + 3, start_y + 3)
-        seal(start_x + 3, start_y + 4)
-
-        offset = 5
-
-        seal(start_x + offset + 0, start_y + 0)
-        seal(start_x + offset + 1, start_y + 0)
-        seal(start_x + offset + 2, start_y + 0)
-        seal(start_x + offset + 3, start_y + 0)
-
-        seal(start_x + offset + 3, start_y + 1)
-
-        seal(start_x + offset + 0, start_y + 2)
-        seal(start_x + offset + 1, start_y + 2)
-        seal(start_x + offset + 2, start_y + 2)
-        seal(start_x + offset + 3, start_y + 2)
-
-        seal(start_x + offset + 0, start_y + 3)
-
-        seal(start_x + offset + 0, start_y + 4)
-        seal(start_x + offset + 1, start_y + 4)
-        seal(start_x + offset + 2, start_y + 4)
-        seal(start_x + offset + 3, start_y + 4)
-
-        return True
+        entry_cell = self.maze.get_cell(self.config.entry)
+        exit_cell = self.maze.get_cell(self.config.exit)
+        if (
+            entry_cell is not None
+            and exit_cell is not None
+        ):
+            if (
+                entry_cell.pattern
+                or exit_cell.pattern
+            ):
+                raise ValueError("Entry/Exit cannot be on '42' pattern")
 
     def _seal_cell_neighbors(self, cell: Cell) -> None:
         """Ensure neighboring cells have matching walls for a sealed cell."""
         x, y = cell.coords.x, cell.coords.y
         for direction, (dx, dy), opp in [
-            ('north', (0,-1), 'south'),
-            ('east',  (1, 0), 'west'),
+            ('north', (0, -1), 'south'),
+            ('east', (1, 0), 'west'),
             ('south', (0, 1), 'north'),
-            ('west',  (-1,0), 'east'),
+            ('west', (-1, 0), 'east'),
         ]:
             neighbor = self.maze.get_cell(Coords(x+dx, y+dy))
             if neighbor:
                 setattr(neighbor, opp, True)
 
     def generate(self) -> None:
-        if self.config.seed:
-            random.seed(self.config.seed)
-        self.maze.create_grid()
-        self._generate_perfect_maze()
-        if not self.config.perfect:
-            self._generate_imperfect_maze()
-        self.apply_42_pattern()  # ← add this
+        try:
+            if self.config.seed is None:
+                seed = int(time.time() * 1000)  # or use another method
+            else:
+                seed = self.config.seed
+            self.config.seed = seed
+            random.seed(seed)
+            self.maze.create_grid()
+            self.apply_42_pattern()
+            self._generate_perfect_maze()
+            if not self.config.perfect:
+                self._generate_imperfect_maze()
+        except Exception as e:
+            raise e
