@@ -202,6 +202,27 @@ class MazeGenerator:
             if neighbor:
                 setattr(neighbor, opp, True)
 
+    def open_rooms_exist(self) -> bool:
+        for y in range(self.maze.height):
+            for x in range(self.maze.width):
+                center = self.maze.get_cell(Coords(x, y))
+                top = self.maze.get_cell(Coords(x, y - 1))
+                right = self.maze.get_cell(Coords(x + 1, y))
+                bottom = self.maze.get_cell(Coords(x, y + 1))
+                left = self.maze.get_cell(Coords(x - 1, y))
+                if not center or not top or not right or not left or not bottom:
+                    continue
+                if (
+                    not center.north and not center.east
+                    and not center.south and not center.west
+                    and not top.east and not top.west
+                    and not right.north and not right.south
+                    and not bottom.east and not bottom.west
+                    and not left.north and not left.south
+                ):
+                    return True
+        return False
+
     def generate(self) -> None:
         try:
             if self.config.seed is None:
@@ -215,5 +236,11 @@ class MazeGenerator:
             self._generate_perfect_maze()
             if not self.config.perfect:
                 self._generate_imperfect_maze()
+            while self.open_rooms_exist():
+                self.maze.create_grid()
+                self.apply_42_pattern()
+                self._generate_perfect_maze()
+                if not self.config.perfect:
+                    self._generate_imperfect_maze()
         except Exception as e:
             raise e

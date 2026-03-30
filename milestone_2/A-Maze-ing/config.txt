@@ -3,11 +3,11 @@
 WIDTH=9
 HEIGHT=9
 # Entry point (x,y)
-ENTRY=2,6
+ENTRY=2,5
 # Exit point (x,y)
 EXIT=7,7
 # Output file name
 OUTPUT_FILE=maze.txt
 # Perfect maze (no loops)
 PERFECT=True
-SEED=35
+SEED=355
