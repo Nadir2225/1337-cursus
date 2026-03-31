@@ -4,7 +4,7 @@ import os
 
 def outside_matrix():
     """function runned if the program executed outside the virtual env
-    and give instructions how to create a virtual env"""
+    and give instructions how to create a virtual env."""
 
     print("\nMATRIX STATUS: You're still plugged in")
 
