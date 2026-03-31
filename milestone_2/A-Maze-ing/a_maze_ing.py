@@ -173,6 +173,8 @@ if __name__ == '__main__':
             maze_gen = MazeGenerator(config)
             maze_gen.generate()
             maze = maze_gen.maze
+            solve = solve_maze_shortest(maze, config.entry, config.exit)
+            generate_output_file(maze, config, solve)
             maze.print_maze(
                 color=color,
                 entry=config.entry,
@@ -180,8 +182,6 @@ if __name__ == '__main__':
                 path_cells=path
             )
             # print(path)
-            solve = solve_maze_shortest(maze, config.entry, config.exit)
-            generate_output_file(maze, config, solve)
             choice = display_menu()
             if choice == 1:
                 if not seed_configured:

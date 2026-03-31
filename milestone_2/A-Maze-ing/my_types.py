@@ -7,7 +7,7 @@ class Coords:
         self.y = y
 
     @classmethod
-    def parse(cls, cords: Optional[str]) -> Coords:
+    def parse(cls, cords: Optional[str]) -> 'Coords':
         if cords is None:
             raise ValueError('coordinates cannot be None')
         try:

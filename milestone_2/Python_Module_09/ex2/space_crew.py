@@ -11,41 +11,52 @@ class Rank(Enum):
     captain = 'captain'
     commander = 'commander'
 
+
 class CrewMember(BaseModel):
-    member_id: str = Field(min_length = 3, max_length = 10)
-    name: str = Field(min_length = 2, max_length = 50)
+    member_id: str = Field(min_length=3, max_length=10)
+    name: str = Field(min_length=2, max_length=50)
     rank: Rank
-    age: int = Field(ge = 18, le=80)
-    specialization: str = Field(min_length = 3, max_length = 30)
-    years_experience: int = Field(ge = 0, le = 50)
+    age: int = Field(ge=18, le=80)
+    specialization: str = Field(min_length=3, max_length=30)
+    years_experience: int = Field(ge=0, le=50)
     is_active: bool = Field(default=True)
 
+
 class SpaceMission(BaseModel):
-    mission_id: str = Field(min_length = 5, max_length = 15)
-    mission_name: str = Field(min_length = 3, max_length = 100)
-    destination: str = Field(min_length = 3, max_length = 50)
+    mission_id: str = Field(min_length=5, max_length=15)
+    mission_name: str = Field(min_length=3, max_length=100)
+    destination: str = Field(min_length=3, max_length=50)
     launch_date: datetime
-    duration_days: int = Field(ge = 1, lt = 3650)
+    duration_days: int = Field(ge=1, lt=3650)
     crew: List[CrewMember] = Field(min_length=1, max_length=12)
     mission_status: str = Field(default="planned")
-    budget_millions: float = Field(ge = 1, le=10000)
+    budget_millions: float = Field(ge=1, le=10000)
 
     @model_validator(mode='after')
     def mission_validation(self):
         if not self.mission_id.startswith("M"):
             raise ValueError('Mission ID must start with "M"')
         captain_or_cammander = [
-            m for m in self.crew if m.rank.value == Rank.captain.value or m.rank.value == Rank.commander.value
+            m for m in self.crew if (
+                m.rank.value == Rank.captain.value
+                or m.rank.value == Rank.commander.value
+            )
         ]
         if len(captain_or_cammander) == 0:
             raise ValueError("Must have at least one Commander or Captain")
         experienced = [1 for m in self.crew if m.years_experience > 5]
         if self.duration_days > 365:
-            if sum(experienced) == 0 or len(self.crew) / sum(experienced) < 0.5:
-                raise ValueError("Long missions (> 365 days) need 50% experienced crew (5+ years)")
+            if (
+                sum(experienced) == 0
+                or len(self.crew) / sum(experienced) < 0.5
+            ):
+                raise ValueError(
+                    "Long missions (> 365 days) need 50%"
+                    " experienced crew (5+ years)"
+                )
         active_members = [1 for m in self.crew if m.is_active]
         if (sum(active_members) != len(self.crew)):
-            raise ValueError("All crew members must be active")    
+            raise ValueError("All crew members must be active")
         return self
 
 
@@ -98,8 +109,10 @@ if __name__ == '__main__':
     print(f"Crew size: {len(mission.crew)}")
     print("Crew members:")
     for member in mission.crew:
-        print(f"- {member.name} ({member.rank.value}) - {member.specialization}")
-
+        print(
+            f"- {member.name} ({member.rank.value})"
+            f" - {member.specialization}"
+        )
 
     print("\n========================================")
     print("Expected validation error:")

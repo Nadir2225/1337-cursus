@@ -34,7 +34,10 @@ def main() -> Any:
     print(f"Crew: {space.crew} people")
     print(f"Power: {space.power_level}%")
     print(f"Oxygen: {space.oxygen_level}%")
-    print(f"Status: {'Operational' if space.is_operational else 'Nonoperational'}")
+    print(
+        "Status: "
+        f"{'Operational' if space.is_operational else 'Nonoperational'}"
+    )
     print("\n========================================")
 
     print("Expected validation error:")

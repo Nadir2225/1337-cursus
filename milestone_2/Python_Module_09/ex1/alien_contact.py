@@ -9,14 +9,15 @@ class ContactType(Enum):
     physical = 'physical'
     telepathic = 'telepathic'
 
+
 class AlienContact(BaseModel):
-    contact_id: str = Field(min_length = 5, max_length = 15)
+    contact_id: str = Field(min_length=5, max_length=15)
     timestamp: datetime
-    location: str = Field(min_length = 3, max_length = 100)
+    location: str = Field(min_length=3, max_length=100)
     contact_type: ContactType
-    signal_strength: float = Field(ge = 0, le=10)
-    duration_minutes: int = Field(gt = 0, lt = 1441)
-    witness_count: int = Field(ge = 1, le = 100)
+    signal_strength: float = Field(ge=0, le=10)
+    duration_minutes: int = Field(gt=0, lt=1441)
+    witness_count: int = Field(ge=1, le=100)
     message_received: str = Field(default=None, max_length=500)
     is_verified: bool = Field(default=False)
 
@@ -24,7 +25,7 @@ class AlienContact(BaseModel):
     def contact_validation(self):
         if not self.contact_id.startswith("AC"):
             raise ValueError('Contact ID must start with "AC" (Alien Contact)')
-        if(
+        if (
             self.contact_type.value == ContactType.physical.value
             and not self.is_verified
         ):
@@ -33,12 +34,16 @@ class AlienContact(BaseModel):
             self.contact_type.value == ContactType.telepathic.value
             and self.witness_count < 3
         ):
-            raise ValueError("Telepathic contact requires at least 3 witnesses")
+            raise ValueError(
+                "Telepathic contact requires at least 3 witnesses"
+            )
         if (
             self.signal_strength > 7.0
-            and self.message_received == None
+            and self.message_received is None
         ):
-            raise ValueError("Strong signals (> 7.0) should include received messages")    
+            raise ValueError(
+                "Strong signals (> 7.0) should include received messages"
+            )
         return self
 
 

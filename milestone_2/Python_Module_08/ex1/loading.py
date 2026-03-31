@@ -1,5 +1,6 @@
 import importlib
 
+
 def pkg_desc(pkg_name: str) -> str:
     if pkg_name == 'pandas':
         return 'Data manipulation '
@@ -8,6 +9,7 @@ def pkg_desc(pkg_name: str) -> str:
     if pkg_name == 'matplotlib':
         return 'Visualization '
     return ''
+
 
 def check_package(pkg_name: str):
     try:
@@ -19,6 +21,7 @@ def check_package(pkg_name: str):
         print(f"[MISSING] {pkg_name} - Not installed")
         return False
 
+
 def check_dependencies():
     print("\nChecking dependencies:")
 
@@ -29,6 +32,7 @@ def check_dependencies():
         results[pkg] = check_package(pkg)
 
     return results
+
 
 def handle_missing(deps):
     missing = [k for k, v in deps.items() if not v]
@@ -44,6 +48,7 @@ def handle_missing(deps):
         return False
     return True
 
+
 def run_analysis():
     import pandas as pd
     import numpy as np
@@ -58,7 +63,6 @@ def run_analysis():
     plt.title("Matrix Data Distribution")
     plt.savefig("matrix_analysis.png")
 
-
     print("\nAnalysis complete!")
     print("Visualization saved as matrix_analysis.png")
 
@@ -68,5 +72,5 @@ if __name__ == '__main__':
 
     deps = check_dependencies()
 
-    if  handle_missing(deps):
+    if handle_missing(deps):
         run_analysis()

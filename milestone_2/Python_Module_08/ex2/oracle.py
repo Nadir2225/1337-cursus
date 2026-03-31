@@ -8,7 +8,10 @@ if __name__ == '__main__':
     load_dotenv()
     print("\nConfiguration loaded:")
 
-    keys = ["MATRIX_MODE", "DATABASE_URL", "API_KEY", "LOG_LEVEL", "ZION_ENDPOINT"]
+    keys = [
+        "MATRIX_MODE", "DATABASE_URL",
+        "API_KEY", "LOG_LEVEL", "ZION_ENDPOINT"
+    ]
 
     env_dict = {key: os.getenv(key) for key in keys}
 
@@ -29,7 +32,6 @@ if __name__ == '__main__':
                 print(f"Mode: {value}")
             elif key == "LOG_LEVEL":
                 print(f"Log Level: {value}")
-
 
     print("\nEnvironment security check:")
     if not missing:
