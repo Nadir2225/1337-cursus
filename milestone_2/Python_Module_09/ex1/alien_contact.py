@@ -1,6 +1,6 @@
 from enum import Enum
-from pydantic import BaseModel, Field, ValidationError, model_validator
 from datetime import datetime
+from pydantic import BaseModel, Field, ValidationError, model_validator
 
 
 class ContactType(Enum):
