@@ -114,7 +114,8 @@ if __name__ == '__main__':
             f" - {member.specialization}"
         )
 
-    print("\n========================================")
+    print()
+    print("========================================")
     print("Expected validation error:")
     try:
         mission = SpaceMission(
