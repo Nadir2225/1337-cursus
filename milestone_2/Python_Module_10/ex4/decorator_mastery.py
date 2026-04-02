@@ -12,7 +12,7 @@ def spell_timer(func: callable) -> callable:
         end_time = time.time()
 
         duration = end_time - start_time
-        print(f"Spell completed in {duration:.4f} seconds")
+        print(f"Spell completed in {duration:.3f} seconds")
 
         return result
 
