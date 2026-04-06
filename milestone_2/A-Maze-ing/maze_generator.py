@@ -1,6 +1,7 @@
 import time
 from my_types import Config, Maze, Cell, Coords
 import random
+from typing import Optional
 
 
 class MazeGenerator:
@@ -230,7 +231,7 @@ class MazeGenerator:
     def generate(self) -> None:
         try:
             if self.config.seed is None:
-                seed = int(time.time() * 1000)  # or use another method
+                seed: Optional[str | int] = int(time.time() * 1000)
             else:
                 seed = self.config.seed
             self.config.seed = seed

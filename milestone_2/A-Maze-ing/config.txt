@@ -1,6 +1,7 @@
+
 # === MAZE CONFIGURATION FILE ===
 # Lines starting with # are comments
-WIDTH=9
+WIdTH=9
 HEIGHT=9
 # Entry point (x,y)
 ENTRY=2,5
@@ -9,5 +10,5 @@ EXIT=7,7
 # Output file name
 OUTPUT_FILE=maze.txt
 # Perfect maze (no loops)
-PERFECT=True
-#SEED=355
+PERFECT=TrUE
+SEED=355hh

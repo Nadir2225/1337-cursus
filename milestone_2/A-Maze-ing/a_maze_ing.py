@@ -1,9 +1,10 @@
-from typing import Optional
+from typing import Optional, Tuple, Any
 import sys
 from file_generator import generate_output_file
 from my_types import Config, Coords
 from maze_generator import MazeGenerator
 from maze_solver import solve_maze_shortest
+import os
 
 
 class ConfigSyntaxError(Exception):
@@ -18,13 +19,22 @@ class OutOfMazeError(Exception):
     pass
 
 
+class ChoiceError(Exception):
+    def __init__(self, choice: str, *args: Tuple[Any, ...]) -> None:
+        super().__init__(*args)
+        self.choice = choice
+
+
 def str_to_bool(s: Optional[str]) -> bool:
-    if s == "True":
-        return True
-    elif s == "False":
-        return False
-    else:
+    if s is None:
         raise ValueError(f"Invalid boolean string: {s}")
+    else:
+        if s.lower() == "true":
+            return True
+        elif s.lower() == "false":
+            return False
+        else:
+            raise ValueError(f"Invalid boolean string: {s}")
 
 
 def validate_config(filename: str) -> Config:
@@ -38,6 +48,8 @@ def validate_config(filename: str) -> Config:
             base_keys = valid_keys + optional_keys
             lines = f.readlines()
             for line in lines:
+                if (line[0] == '\n'):
+                    continue
                 line = line.rstrip('\n')
                 if (line[0] == '#'):
                     continue
@@ -45,13 +57,13 @@ def validate_config(filename: str) -> Config:
                 if (len(splitted_line) != 2):
                     raise ConfigSyntaxError('syntax error')
                 if (
-                    splitted_line[0] in valid_keys
-                    or splitted_line[0] in optional_keys
+                    splitted_line[0].upper() in valid_keys
+                    or splitted_line[0].upper() in optional_keys
                 ):
                     (
-                        valid_keys.remove(splitted_line[0])
-                        if splitted_line[0] in valid_keys
-                        else optional_keys.remove(splitted_line[0])
+                        valid_keys.remove(splitted_line[0].upper())
+                        if splitted_line[0].upper() in valid_keys
+                        else optional_keys.remove(splitted_line[0].upper())
                     )
                 elif splitted_line[0] in base_keys:
                     raise ConfigSyntaxError(
@@ -64,14 +76,10 @@ def validate_config(filename: str) -> Config:
             # f.seek(0)
             # lines = f.readlines()
             config_dict = {
-                line.rstrip('\n').split('=')[0]:
+                line.rstrip('\n').split('=')[0].upper():
                 line.rstrip('\n').split('=')[1]
-                for line in lines if line[0] != '#'
+                for line in lines if (line[0] != '\n' and line[0] != '#')
             }
-            seed_value = None
-            seed_dict_value = config_dict.get('SEED')
-            if seed_dict_value is not None:
-                seed_value = int(seed_dict_value)
             width_value = config_dict.get('WIDTH')
             if width_value is not None:
                 width = int(width_value)
@@ -85,7 +93,7 @@ def validate_config(filename: str) -> Config:
                 exit=Coords.parse(config_dict.get('EXIT')),
                 output_file=config_dict.get('OUTPUT_FILE'),
                 perfect=str_to_bool(config_dict.get('PERFECT')),
-                seed=seed_value
+                seed=config_dict.get('SEED')
             )
             if config_object.width < 8 or config_object.height < 8:
                 raise MazeDimensionsError
@@ -118,9 +126,9 @@ def validate_config(filename: str) -> Config:
     except ValueError as e:
         print(e)
         sys.exit(1)
-    except IndexError:
-        print('config file is empty')
-        sys.exit(1)
+    # except IndexError:
+    #     print('config file is empty')
+    #     sys.exit(1)
 
 
 def solve_to_path(entry: Coords, solve: str) -> set[tuple[int, int]]:
@@ -146,6 +154,9 @@ def display_menu() -> int:
     print("3. Rotate maze colors")
     print("4. Quit")
     inp = input("choice? (1-4): ")
+    choices = ['1', '2', '3', '4']
+    if inp not in choices:
+        raise ChoiceError(inp)
     return int(inp)
 
 
@@ -201,6 +212,16 @@ if __name__ == '__main__':
                 continue
             if choice == 4:
                 break
+            os.system('cls' if os.name == 'nt' else 'clear')
+            if os.name == 'nt':
+                print('\033c', end="")
+        except ChoiceError as e:
+            print(f'invalid choice input: {e.choice}')
         except Exception as e:
             print(e)
             sys.exit(1)
+        except BaseException:
+            os.system('cls' if os.name == 'nt' else 'clear')
+            if os.name == 'nt':
+                print('\033c', end="")
+            continue

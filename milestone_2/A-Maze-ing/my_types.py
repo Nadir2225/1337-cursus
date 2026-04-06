@@ -31,7 +31,7 @@ class Config:
         exit: Coords,
         output_file: Optional[str],
         perfect: bool,
-        seed: Optional[int],
+        seed: Optional[str | int],
     ):
         self.width = width
         self.height = height
