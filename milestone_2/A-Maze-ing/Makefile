@@ -4,10 +4,11 @@ CONFIG	= config.txt
 all: install
 
 install:
+	pip3 install poetry
 	poetry install
 
-run: install
-	poetry run python $(NAME).py $(CONFIG)
+run:
+	poetry run python3 $(NAME).py $(CONFIG)
 
 build:
 	poetry build
