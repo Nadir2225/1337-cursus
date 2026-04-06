@@ -4,18 +4,20 @@ CONFIG	= config.txt
 all: install
 
 install:
-	pip3 install poetry
-	poetry install
+	pipx install uv
+	uv run pip3 install mazegen-0.1.0-py3-none-any.whl --target .
+	uv sync
 
 run:
-	poetry run python3 $(NAME).py $(CONFIG)
+	uv run python3 $(NAME).py $(CONFIG)
 
 build:
-	poetry build
+	uv build
 
 clean:
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
+	rm -rf mazegen-0.1.0.dist-info
 
 fclean: clean
 	rm -rf dist/

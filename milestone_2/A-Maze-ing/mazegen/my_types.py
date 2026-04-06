@@ -122,16 +122,22 @@ class Maze:
             top_line = ""
             for x in range(self.width):
                 cell = self.grid[y][x]
-                top_line += f"{color[0]}+\033[0m"
+                if cell.pattern:
+                    top_line += f"{color[1]}█\033[0m"
+                else:
+                    top_line += f"{color[0]}█\033[0m"
                 # if is_sealed(cell) and cell.pattern:
                 if cell.pattern:
-                    top_line += f"{color[1]}###\033[0m"
+                    top_line += f"{color[1]}███\033[0m"
                 else:
                     top_line += (
-                        f"{color[0]}---\033[0m"
+                        f"{color[0]}███\033[0m"
                         if cell.north else "   "
                     )
-            top_line += f"{color[0]}+\033[0m"
+            if cell.pattern:
+                top_line += f"{color[1]}█\033[0m"
+            else:
+                top_line += f"{color[0]}█\033[0m"
             print(top_line)
 
             # Cell content row
@@ -142,11 +148,11 @@ class Maze:
                 # if is_sealed(cell) and cell.pattern:
                 if cell.pattern:
                     # Sealed = part of "42" pattern, render as solid block
-                    mid_line += f"{color[1]}####\033[0m"
+                    mid_line += f"{color[1]}████\033[0m"
                     continue
 
                 # Left wall
-                mid_line += f"{color[0]}|\033[0m" if cell.west else " "
+                mid_line += f"{color[0]}█\033[0m" if cell.west else " "
 
                 # Cell content
                 if (
@@ -162,19 +168,19 @@ class Maze:
                 ):
                     mid_line += " X "
                 elif (x, y) in path_set:
-                    mid_line += " · "  # path marker
+                    mid_line += " ● "  # path marker
                 else:
                     mid_line += "   "
 
             # Rightmost wall (only if last cell wasn't sealed)
             last_cell = self.grid[y][self.width - 1]
             if not is_sealed(last_cell):
-                mid_line += f"{color[0]}|\033[0m"
+                mid_line += f"{color[0]}█\033[0m"
             print(mid_line)
 
         # Bottom wall row
         bottom_line = ""
         for x in range(self.width):
-            bottom_line += f"{color[0]}+---\033[0m"
-        bottom_line += f"{color[0]}+\033[0m"
+            bottom_line += f"{color[0]}████\033[0m"
+        bottom_line += f"{color[0]}█\033[0m"
         print(bottom_line)

@@ -181,9 +181,9 @@ if __name__ == '__main__':
         ("\033[32m", "\033[31m"),  # green walls, red path
         ("\033[36m", "\033[35m"),  # cyan walls, magenta path
         ("\033[33m", "\033[34m"),  # yellow walls, blue path
-        ("\033[0m", "\033[0m"),  # yellow walls, blue path
+        ("\033[37m", "\033[90m"),  # default white walls, grey path
     ]
-    DEFAULT = ("\033[0m", "\033[0m")
+    DEFAULT = ("\033[37m", "\033[90m")
     color = DEFAULT
     if len(sys.argv) != 2:
         print("you should specify the config file's name")
