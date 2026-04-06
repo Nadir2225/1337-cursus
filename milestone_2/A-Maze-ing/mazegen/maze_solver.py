@@ -1,5 +1,5 @@
 from collections import deque
-from my_types import Maze, Coords
+from .my_types import Maze, Coords
 
 
 def solve_maze_shortest(maze: Maze, entry: Coords, exit: Coords) -> str:

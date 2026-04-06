@@ -1,9 +1,11 @@
 from typing import Optional, Tuple, Any
 import sys
-from file_generator import generate_output_file
-from my_types import Config, Coords
-from maze_generator import MazeGenerator
-from maze_solver import solve_maze_shortest
+from mazegen import (
+    generate_output_file,
+    MazeGenerator,
+    solve_maze_shortest,
+    Config, Coords
+)
 import os
 
 
@@ -57,27 +59,31 @@ def validate_config(filename: str) -> Config:
                 if (len(splitted_line) != 2):
                     raise ConfigSyntaxError('syntax error')
                 if (
-                    splitted_line[0].upper() in valid_keys
-                    or splitted_line[0].upper() in optional_keys
+                    (splitted_line[0].strip()).upper() in valid_keys
+                    or (splitted_line[0].strip()).upper() in optional_keys
                 ):
                     (
-                        valid_keys.remove(splitted_line[0].upper())
-                        if splitted_line[0].upper() in valid_keys
-                        else optional_keys.remove(splitted_line[0].upper())
+                        valid_keys.remove((splitted_line[0].strip()).upper())
+                        if (splitted_line[0].strip()).upper() in valid_keys
+                        else optional_keys.remove(
+                            (splitted_line[0].strip()).upper()
+                        )
                     )
-                elif splitted_line[0] in base_keys:
+                elif (splitted_line[0].strip()) in base_keys:
                     raise ConfigSyntaxError(
-                        f'duplicated key: {splitted_line[0]}'
+                        f'duplicated key: {(splitted_line[0].strip())}'
                     )
                 else:
-                    raise ConfigSyntaxError(f'invalid key: {splitted_line[0]}')
+                    raise ConfigSyntaxError(
+                        f'invalid key: {splitted_line[0].strip()}'
+                    )
             if len(valid_keys) > 0:
                 raise ConfigSyntaxError(f'missing keys: {valid_keys}')
             # f.seek(0)
             # lines = f.readlines()
             config_dict = {
-                line.rstrip('\n').split('=')[0].upper():
-                line.rstrip('\n').split('=')[1]
+                (line.rstrip('\n').split('=')[0].strip()).upper():
+                (line.rstrip('\n').split('=')[1].strip())
                 for line in lines if (line[0] != '\n' and line[0] != '#')
             }
             width_value = config_dict.get('WIDTH')
@@ -86,11 +92,17 @@ def validate_config(filename: str) -> Config:
             height_value = config_dict.get('HEIGHT')
             if height_value is not None:
                 height = int(height_value)
+            entry_value = Coords.parse(config_dict.get('ENTRY')),
+            exit_value = Coords.parse(config_dict.get('EXIT')),
+            if entry_value == exit_value:
+                raise ValueError(
+                    "entry and exit cannot have the same coordinates"
+                )
             config_object = Config(
                 width=width,
                 height=height,
-                entry=Coords.parse(config_dict.get('ENTRY')),
-                exit=Coords.parse(config_dict.get('EXIT')),
+                entry=entry_value[0],
+                exit=exit_value[0],
                 output_file=config_dict.get('OUTPUT_FILE'),
                 perfect=str_to_bool(config_dict.get('PERFECT')),
                 seed=config_dict.get('SEED')
@@ -161,6 +173,7 @@ def display_menu() -> int:
 
 
 if __name__ == '__main__':
+    os.system('cls' if os.name == 'nt' else 'clear')
     colors = [
         ("\033[31m", "\033[32m"),  # red walls, green path
         ("\033[34m", "\033[33m"),  # blue walls, yellow path
@@ -179,6 +192,7 @@ if __name__ == '__main__':
     seed_configured = config.seed is not None
     path = None
     while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
         # print(config)
         try:
             maze_gen = MazeGenerator(config)
@@ -212,9 +226,9 @@ if __name__ == '__main__':
                 continue
             if choice == 4:
                 break
-            os.system('cls' if os.name == 'nt' else 'clear')
-            if os.name == 'nt':
-                print('\033c', end="")
+            # os.system('cls' if os.name == 'nt' else 'clear')
+            # if os.name == 'nt':
+            #     print('\033c', end="")
         except ChoiceError as e:
             print(f'invalid choice input: {e.choice}')
         except Exception as e:

@@ -1,5 +1,5 @@
 import time
-from my_types import Config, Maze, Cell, Coords
+from .my_types import Config, Maze, Cell, Coords
 import random
 from typing import Optional
 

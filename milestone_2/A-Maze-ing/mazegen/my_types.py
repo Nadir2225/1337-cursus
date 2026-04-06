@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Any, Optional, List
 
 
 class Coords:
@@ -20,6 +20,11 @@ class Coords:
 
     def __str__(self) -> str:
         return f'({self.x}, {self.y})'
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Coords):
+            return False
+        return self.x == other.x and self.y == other.y
 
 
 class Config:
