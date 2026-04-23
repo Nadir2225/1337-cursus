@@ -11,7 +11,7 @@ def number_base_converter(number: str, from_base: int, to_base: int) -> str:
 		return converted_num[::-1]
 	except:
 		return "ERROR"
-	
+
 
 if __name__ == '__main__':
 	print('================ Test Cases ================')

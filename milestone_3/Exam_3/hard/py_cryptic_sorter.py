@@ -12,7 +12,6 @@ def cryptic_sorter(strings: list[str]) -> list[str]:
 		key=lambda s: (
 			len(s),
 			s.lower(),
-			s.islower(),
 			vowls_count(s)
 		)
 	)
