@@ -1,20 +1,20 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
+#    Makefilejjjj                                       :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/04 19:38:31 by nel-ouad          #+#    #+#              #
-#    Updated: 2026/05/12 16:52:43 by nel-ouad         ###   ########.fr        #
+#    Updated: 2026/05/12 16:52:34 by nel-ouad         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = training
+NAME = codexion
 
 CC = cc
-# CFLAGS = -Wall -Wextra -Werror -I include
-SRC = training.c
+CFLAGS = -Wall -Wextra -Werror -I include
+SRC = main.c
 RM = rm -f
 
 all: $(NAME)
@@ -27,9 +27,6 @@ clean:
 
 fclean: clean
 
-run:
-	./training
+re: fclean all
 
-re: fclean all run
-
-.PHONY: all clean fclean re run
+.PHONY: all clean fclean re
