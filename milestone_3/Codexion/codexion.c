@@ -6,7 +6,7 @@
 /*   By: nel-ouad <nel-ouad@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/26 13:43:31 by marvin            #+#    #+#             */
-/*   Updated: 2026/05/16 21:21:12 by nel-ouad         ###   ########.fr       */
+/*   Updated: 2026/05/18 14:58:23 by nel-ouad         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ int	main(int ac, char **av)
 	params->use_edf = !strcmp(av[8], "edf");
 	print_params(*params);
 
-	if (!init_sim(&sim, params))
+	if (!init_sim(&sim, *params))
 		return (1);
 	/* launch coder threads + monitor here */
 	/* pthread_join all */
