@@ -27,14 +27,6 @@ int	is_head(t_dongle *d, int coder_id)
 	return (d->queue.size > 0 && d->queue.data[0].coder_id == coder_id);
 }
 
-/*
-** A coder owns the claim on its pair only if no higher-priority rival on
-** either dongle owns it first.  Rivals are inspected recursively, and each
-** step moves strictly up in priority, so the walk always terminates.
-** Availability (in use / cooling down) is deliberately not considered: the
-** claim is held across those windows so that a coder waiting on one dongle
-** cannot have the other one stolen by a rival that queued later.
-*/
 int	grantable(t_table *t, int id)
 {
 	t_dongle	*f;
