@@ -34,8 +34,7 @@ class LLM_Model:
         response = self.tokenizer.decode(
             tokens[0],
             skip_special_tokens=True
-        )
-        print(response)
+        )[0]
         assert isinstance(response, str)
         return response
 

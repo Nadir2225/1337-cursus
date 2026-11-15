@@ -1,0 +1,69 @@
+{
+  "search_results": [
+    {
+      "question_id": "17526382-7764-4120-b5e8-2d3726b8a4da",
+      "question": "What HTTP endpoint is used to dynamically load a LoRA adapter in vLLM?",
+      "retrieved_sources": [
+        {
+          "file_path": "data/raw/vllm-0.10.1/docs/features/lora.md",
+          "first_character_index": 4695,
+          "last_character_index": 6098
+        },
+        {
+          "file_path": "data/raw/vllm-0.10.1/vllm/plugins/lora_resolvers/README.md",
+          "first_character_index": 0,
+          "last_character_index": 829
+        },
+        {
+          "file_path": "data/raw/vllm-0.10.1/examples/others/tensorize_vllm_model.py",
+          "first_character_index": 3857,
+          "last_character_index": 4456
+        },
+        {
+          "file_path": "data/raw/vllm-0.10.1/docs/features/lora.md",
+          "first_character_index": 6100,
+          "last_character_index": 8080
+        },
+        {
+          "file_path": "data/raw/vllm-0.10.1/docs/features/lora.md",
+          "first_character_index": 4075,
+          "last_character_index": 4693
+        }
+      ],
+      "answer": "The HTTP endpoint used to dynamically load a LoRA adapter in vLLM is `http://localhost:8000/v1/load_lora_adapter`."
+    },
+    {
+      "question_id": "cc83c230-099f-4c11-aeab-8c09715c5942",
+      "question": "What command can be used to evaluate the accuracy of a quantized model using lm_eval with vLLM?",
+      "retrieved_sources": [
+        {
+          "file_path": "data/raw/vllm-0.10.1/docs/features/quantization/int4.md",
+          "first_character_index": 3387,
+          "last_character_index": 3972
+        },
+        {
+          "file_path": "data/raw/vllm-0.10.1/docs/features/quantization/int8.md",
+          "first_character_index": 2439,
+          "last_character_index": 4408
+        },
+        {
+          "file_path": "data/raw/vllm-0.10.1/docs/features/quantization/fp8.md",
+          "first_character_index": 3163,
+          "last_character_index": 4563
+        },
+        {
+          "file_path": "data/raw/vllm-0.10.1/docs/features/quantization/quark.md",
+          "first_character_index": 6638,
+          "last_character_index": 8031
+        },
+        {
+          "file_path": "data/raw/vllm-0.10.1/tests/tpu/test_quantization_accuracy.py",
+          "first_character_index": 0,
+          "last_character_index": 1602
+        }
+      ],
+      "answer": "The command used to evaluate the accuracy of a quantized model using lm_eval with vLLM is:\n\n```bash\nlm_eval --model vllm --model_args pretrained=\"./Meta-Llama-3-8B-Instruct-W8A8-Dynamic-Per-Token\",add_bos_token=true --tasks gsm8k --num_fewshot 5 --limit 250 --batch_size 'auto'\n```"
+    }
+  ],
+  "k": 5
+}

@@ -3,6 +3,7 @@ from pathlib import Path
 import bm25s
 from .models.MinimalSource import MinimalSource
 from .models.MinimalSearchResults import MinimalSearchResults
+from .models.StudentSearchResults import StudentSearchResults
 
 
 def search_single_query(query: str, k: int) -> list[MinimalSource]:
@@ -25,9 +26,9 @@ def search_dataset(dataset_path: str, k: int, save_directory):
     with open(dataset_path, "r") as f:
         data = json.load(f)
 
-    search_results: list[MinimalSearchResults] = []
+    min_search_res: list[MinimalSearchResults] = []
     for question in data["rag_questions"]:
-        search_results.append(
+        min_search_res.append(
             MinimalSearchResults(
                 question_id=question["question_id"],
                 question=question["question"],
@@ -35,13 +36,20 @@ def search_dataset(dataset_path: str, k: int, save_directory):
             )
         )
 
-    save_directory = Path(save_directory)
+    search_results = StudentSearchResults(
+        search_results=min_search_res,
+        k=k
+    )
+
+    save_directory = Path(save_directory) / "StudentSearchResults.json"
 
     save_directory.parent.mkdir(parents=True, exist_ok=True)
 
     with open(save_directory, "w") as f:
         json.dump(
-            [r.model_dump() for r in search_results],
+            search_results.model_dump(),
             f,
             indent=2
         )
+    
+    print(f"Saved student_search_results to {save_directory}")
