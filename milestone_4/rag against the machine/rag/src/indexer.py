@@ -73,9 +73,6 @@ def eligible_file(path: Path):
     valid_ext = path.suffix in (".py", ".md", ".txt")
     return path.is_file() and valid_ext
 
-def tokenizer(chunk: MinimalSource):
-    pass
-
 def indexer(max_size: int):
     raw_path = Path("data/raw/vllm-0.10.1")
     processed_path = Path("data/processed")
@@ -93,9 +90,6 @@ def indexer(max_size: int):
         stopwords=None,
         show_progress=False
     )
-
-    # print(corpus_tokens.ids)
-    # print(corpus_tokens.vocab)
 
     retriver = bm25s.BM25()
 

@@ -24,33 +24,39 @@ def evaluate(student_search_results_path: str, dataset_path: str):
     student_search_results = StudentSearchResults(**student_search_results)
 
     recalls = {
-        "recall@1": 0,
-        "recall@3": 0,
-        "recall@5": 0,
-        "recall@10": 0,
+        "Recall@1": 0,
+        "Recall@3": 0,
+        "Recall@5": 0,
+        "Recall@10": 0,
     }
 
+    q_count = 0
     for question in student_search_results.search_results:
         ref = get_ref_question(question.question_id, dataset_path)
+        q_count += 1
         if not ref:
             continue
         ref_source = ref.sources[0]
         if ref_source == question.retrieved_sources[0]:
-            recalls["recall@1"] += 1
-            recalls["recall@3"] += 1
-            recalls["recall@5"] += 1
-            recalls["recall@10"] += 1
+            recalls["Recall@1"] += 1
+            recalls["Recall@3"] += 1
+            recalls["Recall@5"] += 1
+            recalls["Recall@10"] += 1
         elif ref_source in question.retrieved_sources[:3]:
-            recalls["recall@3"] += 1
-            recalls["recall@5"] += 1
-            recalls["recall@10"] += 1
+            recalls["Recall@3"] += 1
+            recalls["Recall@5"] += 1
+            recalls["Recall@10"] += 1
         elif ref_source in question.retrieved_sources[:5]:
-            recalls["recall@5"] += 1
-            recalls["recall@10"] += 1
+            recalls["Recall@5"] += 1
+            recalls["Recall@10"] += 1
         elif ref_source in question.retrieved_sources[:10]:
-            recalls["recall@10"] += 1
-    print(recalls)
+            recalls["Recall@10"] += 1
+
     for k in recalls.keys():
-        recalls[k] = recalls[k]/len(student_search_results.search_results)
-    
-    print(recalls)
+        recalls[k] = round(
+            recalls[k]/len(student_search_results.search_results), 3
+        )
+    print("=================================")
+    print(f"Questions evaluated: {q_count}")
+    for recall, value in recalls.items():
+        print(f"{recall}: {value} ({(value * 100):.1f}%)")
